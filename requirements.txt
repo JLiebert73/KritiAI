@@ -1,0 +1,7 @@
+streamlit==1.36.0
+google-generativeai==0.8.6
+pandas==2.2.2
+pillow==10.3.0
+python-dotenv==1.0.1
+earthengine-api==0.1.408
+qdrant-client==1.9.1

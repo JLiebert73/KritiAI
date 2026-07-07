@@ -1,0 +1,78 @@
+System Design Document: KritiAI (v0 MVP)
+1. Executive Summary
+Objective: To build a functional, end-to-end prototype demonstrating KritiAI’s capability as the "Harvey AI for regional governance."
+Focus Workflow: Real-Time Crop-Failure Compensation Verification.
+Goal: Prove that unstructured, messy administrative paperwork can be mathematically aligned with physical environmental data to automate a bureaucratic auditing process.
+
+2. Scope & Constraints
+In-Scope:
+
+Upload of scanned, handwritten regional forms (simulating Assamese/English agricultural claims).
+
+Extraction of text and spatial layout via a Vision-Language Model (VLM).
+
+Retrieval of relevant environmental data (simulated satellite/weather embeddings based on plot coordinates).
+
+Generation of an automated "Audit Decision" (Verifiable, Discrepancy Found, or Flagged for Manual Review).
+
+Out-of-Scope (Deferred to v1):
+
+Live API connections to AlphaEarth or WeatherNext 2 (v0 will use pre-computed, static simulated datasets).
+
+Voice-driven citizen co-piloting.
+
+Production deployment and enterprise security compliance.
+
+3. High-Level Architecture
+The v0 architecture is designed for rapid iteration, leveraging lightweight frameworks and localized processing.
+
+3.1. Frontend Interface (The User Layer)
+Framework: Streamlit or Gradio.
+
+Functionality: A minimalist, two-panel dashboard.
+
+Input Panel: File uploader for document scans (PDF/JPG) and manual input fields for spatial coordinates (Lat/Long).
+
+Output Panel: Visual display of the extracted document text, the retrieved environmental baseline, and the final Audit Decision with a confidence score.
+
+3.2. Data Ingestion & VLM Pipeline (The Parsing Layer)
+OCR & Layout Extraction: Utilizing a lightweight, layout-aware VLM (e.g., LayoutLMv3 or a quantized multi-modal model).
+
+Process: The model extracts not just the raw text, but the structural hierarchy (e.g., identifying where an official seal or inspector's marginal note is located on the page).
+
+3.3. Environmental Context & Vector Storage (The Grounding Layer)
+Vector Database: FAISS or ChromaDB.
+
+Process:
+
+A static database loaded with simulated multi-year environmental embeddings for specific coordinate grids in Assam.
+
+When the user inputs coordinates, the system performs a similarity search to pull the historical weather/terrain vector corresponding to that plot.
+
+3.4. Cross-Modal Alignment & Reasoning (The Brain)
+Framework: LangChain or LlamaIndex.
+
+Process: A Retrieval-Augmented Generation (RAG) pipeline combined with a Hierarchical Reasoning Model (HRM) logic block. The pipeline constructs a unified prompt injecting both the structured document data and the decoded environmental vectors, forcing the LLM to act as the auditor comparing the two modalities.
+
+4. Development & Execution Strategy
+Since you are executing this solo on an aggressive timeline before the Stage 2 deadline, rapid scaffolding is critical.
+
+Code Generation: Rely heavily on Gemini Code Assist and the Antigravity agentic development system to churn through the standard boilerplate. Use them to instantly generate the Streamlit layout, the FAISS indexing scripts, and the LangChain routing logic so you can focus entirely on fine-tuning the cross-modal alignment math.
+
+Mock Data Generation: Create 3-5 highly realistic "golden path" test cases. Hand-write a few mock compensation forms, scan them, and create corresponding simulated weather vectors (e.g., one showing heavy rainfall matching the claim, one showing drought contradicting a flood claim).
+
+5. Deliverables for Stage 2
+Overleaf Report: Detailing the architecture above.
+
+Local Codebase: The functional Python scripts running the pipeline.
+
+Demo Video: A 2-minute uninterrupted screen recording of the Streamlit app processing a mock claim.
+
+6. v2 Roadmap (Future Expansion)
+- Dual Modes (Office vs. Consumer): Office Mode for government auditors and a simplified Consumer Mode for farmers.
+- Interactive Document Chatbot: A conversational AI assistant allowing officials and farmers to "chat" directly with the uploaded documents and query specific clauses or historical data.
+
+7. v3 Roadmap (Workflow Automation & Deep Sourcing)
+- Intelligent Onboarding Engine: A guided workflow that asks users to upload all available documentation upfront, automatically pre-processes the context, and prepares tailored follow-up investigation questions for the office workers.
+- Multi-Year AlphaEarth Embedding Alignment: For disaster field verification across multiple years, the engine will directly compute and compare AlphaEarth spatial-temporal embeddings to mathematically prove shock anomalies (e.g., floods, droughts) independent of human reporting.
+- Real-Time Disaster Firehoses (Short Audits): Integration of live data streams from sources like X (formerly Twitter) and local online news reports. This allows the system to run immediate "short audits" by correlating claimed disaster dates with spikes in relevant local social media and news chatter.

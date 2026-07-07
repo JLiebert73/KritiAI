@@ -1,0 +1,221 @@
+Thanks for filling in this form: Platinum Jubilee Innovation Challenge |  Stage 1: Team Registration
+Here's what was received.
+Edit response
+Platinum Jubilee Innovation Challenge |  Stage 1: Team Registration
+In its Platinum Jubilee year, IIT Kharagpur challenges every student within its gates. This is a two-track call for science-driven, research-backed innovation that India and the world actually need, not incremental improvements or surface-level applications, but genuinely hard, deep work of the kind this Institute was built for.
+
+WHAT IS ON OFFER
+• A total prize pool of Rs 2 crore
+• 75 finalist teams, and every finalist receives a cash award
+• Two tracks — (A) Deep Tech for the World, and (B) Campus Wellbeing & Sustainability
+• Mentorship from faculty, alumni and industry
+• Visibility with investors, and consideration for incubation through the Institute's innovation ecosystem
+
+TIMELINE
+• Call for Proposals opens — 21st May, 2026
+• Stage 1 (this form) — team registration & broad proposal, submit by 31st May
+• Stage 2 — detailed proposal (form link will be shared through mail), deadline 10 June 2026 (indicative)
+• 75 finalist teams shortlisted — Mid of July
+• Winners announced — Mid of August (During Platinum Jubilee Celebration)
+
+WHO CAN PARTICIPATE
+• Teams must be anchored by IIT Kharagpur students (UG / PG / PhD/ 2026 Graduates)
+• Team size — up to 6 student members (1 leader + up to 5 additional members)
+• Interdisciplinary and cross-departmental teams are strongly encouraged
+
+BEFORE YOU BEGIN
+This form has 6 sections and takes about 10-15 minutes. Keep ready: roll numbers and institute emails of all members, mentor details, and the mentor's signed consent letter (PDF or image, up to 2 MB). Fields marked with * are mandatory.
+Your email address (vedicdutta86@gmail.com) was recorded when you submitted this form.
+Section A - Team Identity
+Details of the team and the team leader. The team leader is automatically counted as Member 1 of the team.
+Q1. Team Name *
+A short name for your team. Maximum 40 characters.
+CivicFlowAI
+Q2. Team Leader - Full Name *
+Vedic Dutta
+Q3. Team Leader - Institute Email ID  *
+vedicdutta73@kgpian.iitkgp.ac.in
+Q4. Team Leader - Mobile Number (10-digit Indian Mobile Number) *
+Enter 10 digits only - no +91, spaces or dashes.
+6003533273
+Q5. Team Leader - Roll Number *
+21CH3AI18
+Q6. Team Leader - Department / Centre / School *
+Department of Artificial Intelligence (Dual Degree MTech), Department of Chemical Engineering (Dual Degree BTech)
+Q7. Team Leader - Academic Level *
+UG
+DD (Dual Degree)
+PG
+PhD
+2026 Graduate
+Q8. Alternate point of contact
+A second team member the organisers can reach if the team leader is unavailable.
+Q8a. Alternate Contact - Name *
+Shaswata K Banik
+Q8b. Alternate Contact - Institute Email ID *
+mohuabanik71@kgpian.iitkgp.ac.in
+Q8c. Alternate Contact - Mobile Number (10-digit Indian Mobile Number) *
+Enter 10 digits only — no +91, spaces or dashes.
+7635801624
+Section B - Team Composition
+A team may have up to 6 student members in total. The team leader (Section A) is Member 1. Use the blocks below to add Members 2 to 6
+Fill only as many member blocks as your team needs and leave the rest blank - every field here is optional for that reason. However, for each member you DO add, please complete all of their fields.
+The mentor is NOT a student member and is entered separately in Section C.
+Team Member 2 (Optional)
+Leave this entire block blank if your team does not have a Member 2.
+Member 2 - Full Name
+Shaswata K Banik
+Member 2 - Roll Number
+21AG3EP05
+Member 2 - Department / Centre / School
+Department of Agriculture (BTech), Enterpreneurship (MTech)
+Member 2 - Academic Level
+UG
+DD (Dual Degree)
+PG
+PhD
+2026 Graduate
+Member 2 - Institute Email ID
+mohuabanik71@kgpian.iitkgp.ac.in
+Member 2 - Mobile Number
+7635801624
+Team Member 3 (Optional)
+Leave this entire block blank if your team does not have a Member 3.
+Member 3 - Full Name
+Member 3 - Roll Number
+Member 3 - Department / Centre / School
+Member 3 - Academic Level
+UG
+DD (Dual Degree)
+PG
+PhD
+2026 Graduate
+Member 3 - Institute Email ID
+Member 3 - Mobile Number
+Team Member 4 (Optional)
+Leave this entire block blank if your team does not have a Member 4.
+Member 4 - Full Name
+Member 4 - Roll Number
+Member 4 - Department / Centre / School
+Member 4 - Academic Level
+UG
+DD (Dual Degree)
+PG
+PhD
+2026 Graduate
+Member 4 - Institute Email ID
+Member 4 - Mobile Number
+Team Member 5 (Optional)
+Leave this entire block blank if your team does not have a Member 5.
+Member 5 - Full Name
+Member 5 - Roll number
+Member 5 - Department / Centre / School
+Member 5 - Academic Level
+UG
+DD (Dual Degree)
+PG
+PhD
+2026 Graduate
+Member 5 - Institute Email ID
+Member 5 - Mobile Number
+Team Member 6 (Optional)
+Leave this entire block blank if your team does not have a Member 6.
+Member 6 - Full Name
+Member 6 - Roll Number
+Member 6 - Department / Centre / School
+Member 6 - Academic Level
+UG
+DD (Dual Degree)
+PG
+PhD
+2026 Graduate
+Member 6 - Institute Email ID
+Member 6 - Mobile Number
+Section C - Mentor (Optional)
+Every team must include exactly one mentor - either an IIT Kharagpur faculty member or a KGP alumnus.
+Q15. Mentor Type
+Faculty
+KGP Alumnus
+Q16. Mentor - Full Name
+Q17. Mentor - Designation
+e.g. Professor / Associate Professor / Senior Engineer / Founder, etc.
+Q18. Mentor - Department / Centre / School (if faculty), or Organisation (if alumnus)
+Q19. Mentor - Email ID
+Q20. Mentor - Mobile Number
+Include country code if outside India (e.g. +1 ...).
+Mentor Consent 
+A signed letter or short typed statement of commitment to guide the team.
+No files submitted
+Section D - Track & Domain
+Tell us which track and technology domain your proposed innovation/solution belongs to.
+Q22. Primary Track *
+Track A - Deep Tech for the World
+Track B - Campus Wellbeing & Sustainability
+Both
+Q23. Primary Technology Domain *
+Choose the domain that best fits your idea, from the official list of illustrative domains.
+Artificial Intelligence & Machine Learning
+Q24. Secondary Technology Domain (optional)
+Optional — only if your idea spans a second domain.
+Agriculture & Food Technology
+Q25. Technology Domain
+Fill this only if you chose an "Other domain (specify below)" option in Q23 or Q24. Otherwise leave blank.
+Section E - Broad Problem Area
+A first sketch of your idea. The detailed proposal follows in Stage 2.
+Q26. Problem Statement *
+What problem are you solving, and why does it matter? Maximum 300 words.
+Regional administrative offices in India operate in fragmented, paper-heavy, and bilingual ecosystems. Having observed the agricultural department of Assam firsthand through my father's work, I have seen how vital organizational context is routinely trapped inside physical registers, handwritten letters, low-resolution WhatsApp scans, and legacy PDFs. Because each rural district and village possesses highly unique environmental, infrastructural, and linguistic nuances, standard software automation completely fails.
+
+Consequently, public employees waste millions of man-hours manually drafting, verifying, and auditing files. When a critical workflow occurs—such as a farmer applying for disaster compensation after a thunderstorm or an official auditing an agricultural land reclamation request—the process stalls. Verifying the legitimacy of a land reclamation file requires cross-referencing messy historical paper archives with physical terrain realities over time. This manual auditing process takes 3 to 6 months, leading to severe bureaucratic backlogs, vulnerability to documentation fraud, and delayed welfare deployment.
+
+Existing enterprise AI solutions are designed for English-first, cleanly digitized corporate data. They cannot read degraded regional scripts or ground unstructured paperwork against real-world data, leaving regional governance trapped in administrative paralysis.
+Q27. Working Title  *
+A concise working title of your proposed innovation/solution. Maximum 50 words.
+KritiAI: Multimodal Document Intelligence and Cross-Modal Action Brain for Regional Governance
+Q28. Proposed Innovation/Solution *
+Give a brief description of your proposed innovation/solution. Maximum 300 words.
+KritiAI is a unified Cross-Modal Regional Intelligence Engine designed to serve as the definitive organizational brain for public administration, launching specifically within the agricultural sector. Rather than a disjointed collection of software features, our product is a foundational integration system that reconstructs complete context from fragmented data, transforming dead paper records and separate data siloes into an actionable intelligence layer.
+
+Crucially, this unified intelligence layer forms our core technical moat. The specific workflows and tools built on top of it are entirely additive features; the true defensibility of the platform is its systemic ability to map unstructured administrative records directly to environmental data. By mastering this deep regional context, the engine can power an infinite, evolving array of downstream agricultural governance tasks:
+
+Multi-Year Land Reclamation Audits: The engine can instantly audit complex, long-horizon agricultural land reclamation requests by automatically tracing historical physical land deeds and matching them against multi-year terrain alteration records.
+
+Real-Time Compensation Claim Verification (Disaster or Otherwise): It automatically verifies the plausibility of crop-failure compensation files (e.g., due to acute disasters or long-term harsh weather conditions) in real time by cross-referencing handwritten local field reports with localized historical atmospheric and remote sensing data grids.
+
+Protection Against Arbitrary Document Revocations: It acts as an immediate shield when a farmer's application is rejected due to administrative oversights, bureaucratic biases, or minor formatting technicalities. The system runs real-time cross-checks against active regulatory databases, flags precisely why a document is facing rejection, and guides the user through instant correction.
+
+Dialect-Aware Citizen Co-Piloting: The engine deploys voice-driven advisory tools that understand highly localized regional dialects, conducting verbal interviews to help farmers instantly redraft and correct files on the spot to avoid wasting time with red tape.
+
+Long-Horizon Semantic Archiving & Auditing: Because the system builds a permanent, cross-referenced memory layer, it allows administrators and citizens to search, trace, and audit any historical file lifecycle, workflow trend, or environmental patch at scale, years down the line.
+
+Our core technical innovation lies in how we achieve this underlying intelligence moat without pioneering an entirely new language model from scratch. For now, our focus is entirely on utilizing lightweight adapter technologies on top of existing foundation models—combining advanced Retrieval-Augmented Generation (RAG) and Hierarchical Reasoning Models (HRM) to execute multi-stage recursive thinking directly within a single mathematical latent embedding space.
+
+For chaotic paper trails, the engine uses layout-aware models to simultaneously read handwritten text and analyze its spatial layout, preserving critical structural context like official department seals and marginal inspector notes. To provide grounding to this context layer with regards to physical reality without expensive infrastructure, the engine directly ingests pre-computed, self-supervised environmental and atmospheric embedding models (such as AlphaEarth Foundations and WeatherNext 2). These frameworks compress planetary-scale multi-sensor satellite grids and weather matrices into compact feature vectors, tracking surface changes even through heavy monsoon cloud cover. Finally, a cross-modal alignment layer projects both the document embeddings and environmental vectors into a shared space, allowing the engine to directly evaluate how a written administrative claim aligns with the physical history of a coordinate plot while keeping setup costs remarkably lean.
+
+As the venture scales and secures increased funding, we plan to transition from these adapter techniques toward building more foundational model architectures, leveraging our unique, proprietary multi-modal datasets to train localized models natively optimized for regional public sector ecosystems.
+Q29. Why is this Deep Tech, not surface-level?
+Explain the scientific or engineering depth - the hard research or technical core (if you have selected Deep Tech as your track). Maximum 100 words.
+KritiAI addresses an open machine learning challenge: Cross-Modal Grounding of low-resource text against spatio-temporal environments. Instead of building superficial API wrappers, we construct a unified intelligence layer. We use mechanisms such as multi-task VLMs to parse structural spatial coordinates of handwritten scripts, preserving hierarchical document context. We map these document tracks against dense, self-supervised atmospheric and geospatial feature vectors (many of them precomputed already by organisations such as DeepMind), projecting different modalities into a single vector space for mathematical alignment. Operating entirely via compact, lightweight parameter-efficient adapters, we achieve deterministic, near-zero-hallucination processing with a massive reduction in local infrastructure costs.
+Section F - Declarations
+Please confirm each of the statements below to submit.
+Q30. I confirm that the team understands the proposal must be original and unpublished. *
+✓
+I confirm
+Ready to submit
+Review your responses, then press Submit. You may edit your submission later using the link shown after you submit. All the best!
+
+Verdict:
+
+Manoj Kumar Mondal <manoj@see.iitkgp.ac.in>
+Sun 14 Jun, 11:14
+to Manoj, director, prajit
+
+Dear Students,
+
+I am happy to convey that your submission for the Platinum Jubilee Innovation Challenge has been selected for the next round. We encourage you to further refine your ideas and enhance their competitive edge. You can expect a communication on June 30th regarding the schedule for the second round of evaluation.
+
+Wishing you all the very best,
+
+Manoj K Mondal
+
+Associate Dean, Innovation and Entrepreneurship
