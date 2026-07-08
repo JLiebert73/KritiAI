@@ -9,14 +9,8 @@ from kriti_engine import extract_document_info, audit_claim, run_short_audit_fir
 # Minimalist Premium UI - High Contrast Dark Mode (#000000) & Glassmorphism
 st.set_page_config(page_title="KritiAI - Production Sandbox", layout="wide", initial_sidebar_state="collapsed")
 
-# Handle Login from URL params
-if st.query_params.get("login") == "true":
-    st.session_state.authenticated = True
-    st.query_params.clear()
-    st.rerun()
-
 if 'authenticated' not in st.session_state:
-    st.session_state.authenticated = False
+    st.session_state.authenticated = True
 
 current_page = st.query_params.get("page", "dashboard")
 
@@ -200,18 +194,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# ----------------- LOGIN PAGE -----------------
-if not st.session_state.authenticated:
-    st.markdown("<br><br><br><br><br><br>", unsafe_allow_html=True)
-    _, login_col, _ = st.columns([1, 1, 1])
-    with login_col:
-        st.markdown("<h1 style='text-align: center; font-size: 3.8rem; letter-spacing: -1px;'>KritiAI</h1>", unsafe_allow_html=True)
-        st.markdown("<p style='text-align: center; color: #a0a0a0; font-size: 1.1rem; font-weight: 300;'>Regional Governance Intelligence Engine</p>", unsafe_allow_html=True)
-        st.markdown("<br><br>", unsafe_allow_html=True)
-        if st.button("Sign in with Google", use_container_width=True):
-            st.session_state.authenticated = True
-            st.rerun()
-    st.stop()
+
 
 # ----------------- MAIN NAVBAR -----------------
 st.markdown("""
