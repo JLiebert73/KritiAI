@@ -104,7 +104,7 @@ st.markdown("""
     
     .hero-slide:nth-child(1) { animation: slideShow1 15s infinite; background-image: url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=2000&q=80'); }
     .hero-slide:nth-child(2) { animation: slideShow2 15s infinite; background-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=2000&q=80'); }
-    .hero-slide:nth-child(3) { animation: slideShow3 15s infinite; background-image: url('https://images.unsplash.com/photo-1560493676-04071c5f467b?auto=format&fit=crop&q=80&w=2000'); }
+    .hero-slide:nth-child(3) { animation: slideShow3 15s infinite; background-image: url('https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=2000&q=80'); }
 
     @keyframes slideShow1 {
         0%, 26% { opacity: 1; transform: translateY(0px); z-index: 2; }
@@ -213,9 +213,6 @@ st.markdown("""
         <a href="/?page=search" target="_self">Semantic Search</a>
         <a href="/?page=learn" target="_self">Learn More</a>
         <a href="/?page=onboarding" target="_self">Onboarding</a>
-    </div>
-    <div class="harvey-nav-buttons">
-        <span class="auth-text">FORENSIC AUDITOR ACTIVE</span>
     </div>
 </div>
 """, unsafe_allow_html=True)
