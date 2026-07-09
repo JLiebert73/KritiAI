@@ -1,0 +1,24 @@
+Assessment of crop yield
+1. crop yield is assessed in advance by state agriculture statistics department by the crop cutting experiment jointly with the agril dept
+2. if any loss occurs after the cce, then the farmer of that particular plot will get the benefit of crop insurance (if insured) under pmfby
+3. dept of agril: they sensitize the people towards the need and benefit of the insurance, and taking care of the farmers: taking their 24-hr response in case of 
+crop damage (reasons: natural disasters such as inundation by flood, draught/water stress, thunderstorm, pest infestation and disease infestation)
+
+auditing: 24 hours from the side of the agril dept to the insurance company
+
+other scenerios:
+1. fertilizers: suppose a farmer cannot buy more than 40 bags of urea, each bag contains 45kg, for a season, whatever maybe the frequency of visit, because in that case, there
+is a chance of misappropriation of fertilizers such as selling to other farmers in a higher rate or maybe used for other purposes other than the crop production, as this is highly
+subsidized (~85% subsidy). 
+issuing soil health card
+
+#natural farming, organic farming, inorganic fertilizer, nanourea, crop forecasting
+
+1.just track they cant use more than x bags of urea per purchase, can be monitored using urea
+
+eodb (public domain, has a complete pipeline), ifms
+there may be chance of mismatch of fertilizer stock in retailers shop between official stock and physical stock of fertilizers, so there is need of the work to track this
+(anomaly detection, future work: cctv tracking of physical stock (Point of Sale (POS) stock))
+
+2. day wise reporting (from unstructured data): heavy manual work (elucidate on this work)
+
