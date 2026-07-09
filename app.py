@@ -542,36 +542,4 @@ elif current_page == "search" or current_page == "learn":
     grid_html += "</div>"
     st.markdown(grid_html, unsafe_allow_html=True)
 
-    st.write("---")
-
-    geospatial_vars = [item["name"] for item in all_embeddings if item["cat"] == "Geospatial"]
-    atmospheric_vars = [item["name"] for item in all_embeddings if item["cat"] == "Atmospheric"]
-    soil_vars = [item["name"] for item in all_embeddings if item["cat"] == "Soil"]
-
-    col1, col2, col3 = st.columns(3)
-
-    with col1:
-        st.subheader("Geospatial / Multi-Modal Embeddings")
-        for item in geospatial_vars:
-            if item in active_set:
-                st.success(f"**{item}** - Active")
-            else:
-                st.write(f"{item} - Standby")
-
-    with col2:
-        st.subheader("Weather / Atmospheric Embeddings")
-        for item in atmospheric_vars:
-            if item in active_set:
-                st.success(f"**{item}** - Active")
-            else:
-                st.write(f"{item} - Standby")
-
-    with col3:
-        st.subheader("Soil Property Embeddings")
-        for item in soil_vars:
-            if item in active_set:
-                st.success(f"**{item}** - Active")
-            else:
-                st.write(f"{item} - Standby")
-
 st.markdown("</div>", unsafe_allow_html=True)
