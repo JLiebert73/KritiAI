@@ -211,7 +211,7 @@ st.markdown("""
     <div class="harvey-logo"><a href="/?page=dashboard" target="_self">KritiAI</a></div>
     <div class="harvey-nav-links">
         <a href="/?page=search" target="_self">Semantic Search</a>
-        <a href="/?page=learn" target="_self">Learn More</a>
+        <a href="/?page=learn" target="_self">Architecture Matrix</a>
         <a href="/?page=onboarding" target="_self">Onboarding</a>
     </div>
 </div>
@@ -382,8 +382,108 @@ elif current_page == "onboarding":
                 st.rerun()
 
 elif current_page == "search" or current_page == "learn":
-    _, center_col, _ = st.columns([1, 2, 1])
-    with center_col:
-        st.markdown("<br><br><h3 style='color:#a0a0a0;'>Semantic Search & Knowledge Base — Coming Soon</h3>", unsafe_allow_html=True)
+    st.title("KritiAI Architecture Matrix")
+    st.write("Dynamic activation matrix mapping multimodal foundation embeddings across forensic verification routes.")
+    st.write("---")
+
+    selected_route = st.radio(
+        "Select Verification Route Scenario:",
+        options=[
+            "Flash Flood Verification (Acute Route)",
+            "Multi-Year Land Conversion (Long-Horizon Route)",
+            "Boundary Dispute Audit (Spatial Route)"
+        ],
+        horizontal=True
+    )
+
+    st.write("")
+
+    geospatial_vars = [
+        "TESSERA (Temporal Embeddings of Surface Spectra)",
+        "AlphaEarth Foundation Embeddings",
+        "PDFM (Population Dynamics Foundation Model)",
+        "DEM (Digital Elevation Model) Embedding",
+        "S2 / H3 Grid Embeddings",
+        "Multi-Sensor Fusion Vector",
+        "OSM Graph Node Embeddings",
+        "Geographical Coordinate Latent",
+        "Topographic Convergence Index",
+        "Multi-Resolution Imagery Embeddings"
+    ]
+
+    atmospheric_vars = [
+        "ERA5 Vision Transformer (ViT)",
+        "LSSANet Spatial Correlation",
+        "Solar Radiation Vector",
+        "Precipitation Anomaly Embedding",
+        "LST (Land Surface Temperature)",
+        "Relative Humidity / Vapor Pressure Deficit",
+        "TimesFM Weather Projection",
+        "Wind Vector Representation"
+    ]
+
+    soil_vars = [
+        "Digital Soil Mapping (DSM) Vector",
+        "Soil Moisture (SM) Downscaling Constraints",
+        "Soil Organic Matter (SOM) Proxy",
+        "Soil Texture (Clay/Silt/Sand) Embeddings",
+        "Genosoil Reference Vectors",
+        "Soil Temperature (SDT) Depth Profile",
+        "Sediment Delivery Ratio (SDR)"
+    ]
+
+    active_set = set()
+    if "Flash Flood Verification" in selected_route:
+        active_set = {
+            "TESSERA (Temporal Embeddings of Surface Spectra)",
+            "Topographic Convergence Index",
+            "Precipitation Anomaly Embedding",
+            "ERA5 Vision Transformer (ViT)",
+            "Soil Moisture (SM) Downscaling Constraints"
+        }
+    elif "Multi-Year Land Conversion" in selected_route:
+        active_set = {
+            "AlphaEarth Foundation Embeddings",
+            "PDFM (Population Dynamics Foundation Model)",
+            "Digital Soil Mapping (DSM) Vector",
+            "Soil Organic Matter (SOM) Proxy",
+            "Soil Texture (Clay/Silt/Sand) Embeddings",
+            "Genosoil Reference Vectors",
+            "Sediment Delivery Ratio (SDR)"
+        }
+    elif "Boundary Dispute Audit" in selected_route:
+        active_set = {
+            "S2 / H3 Grid Embeddings",
+            "OSM Graph Node Embeddings",
+            "Geographical Coordinate Latent",
+            "DEM (Digital Elevation Model) Embedding",
+            "Multi-Resolution Imagery Embeddings"
+        }
+
+    col1, col2, col3 = st.columns(3)
+
+    with col1:
+        st.subheader("Geospatial / Multi-Modal Embeddings")
+        for item in geospatial_vars:
+            if item in active_set:
+                st.success(f"✅ **{item}** - Active")
+            else:
+                st.write(f"⚪ {item} - Standby")
+
+    with col2:
+        st.subheader("Weather / Atmospheric Embeddings")
+        for item in atmospheric_vars:
+            if item in active_set:
+                st.success(f"✅ **{item}** - Active")
+            else:
+                st.write(f"⚪ {item} - Standby")
+
+    with col3:
+        st.subheader("Soil Property Embeddings")
+        for item in soil_vars:
+            if item in active_set:
+                st.success(f"✅ **{item}** - Active")
+            else:
+                st.write(f"⚪ {item} - Standby")
 
 st.markdown("</div>", unsafe_allow_html=True)
