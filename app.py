@@ -458,26 +458,26 @@ elif current_page == "search" or current_page == "learn":
 .matrix-grid-5x5 {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    gap: 24px;
-    padding: 20px 5px;
-    margin-top: 15px;
-    margin-bottom: 30px;
+    gap: 14px;
+    padding: 10px 0;
+    max-width: 1050px;
+    margin: 5px auto 20px auto;
 }
 .matrix-node {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    padding: 16px 10px;
-    border-radius: 14px;
+    padding: 10px 6px;
+    border-radius: 10px;
     transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .matrix-circle {
-    width: 95px;
-    height: 95px;
+    width: 64px;
+    height: 64px;
     border-radius: 50%;
     overflow: hidden;
-    margin-bottom: 12px;
+    margin-bottom: 8px;
     position: relative;
     background-color: #111111;
     transition: all 0.35s ease;
@@ -492,23 +492,23 @@ elif current_page == "search" or current_page == "learn":
     border: 1px solid rgba(0, 255, 102, 0.4);
 }
 .node-active .matrix-circle {
-    border: 3px solid #00ff66;
-    box-shadow: 0 0 24px rgba(0, 255, 102, 0.85);
-    transform: scale(1.08);
+    border: 2.5px solid #00ff66;
+    box-shadow: 0 0 16px rgba(0, 255, 102, 0.85);
+    transform: scale(1.06);
 }
 .node-inactive {
-    opacity: 0.32;
+    opacity: 0.30;
 }
 .node-inactive .matrix-circle {
-    border: 2px solid #2a2a2a;
+    border: 1.5px solid #2a2a2a;
     filter: grayscale(95%) brightness(0.45);
 }
 .node-title {
-    font-size: 0.82rem;
+    font-size: 0.73rem;
     font-weight: 500;
-    line-height: 1.35;
-    margin-bottom: 6px;
-    min-height: 38px;
+    line-height: 1.25;
+    margin-bottom: 4px;
+    min-height: 32px;
 }
 .node-active .node-title {
     color: #ffffff;
@@ -518,9 +518,9 @@ elif current_page == "search" or current_page == "learn":
     color: #777777;
 }
 .node-badge {
-    font-size: 0.72rem;
+    font-size: 0.64rem;
     font-weight: 600;
-    letter-spacing: 0.6px;
+    letter-spacing: 0.5px;
 }
 .badge-active {
     color: #00ff66;
