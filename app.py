@@ -383,7 +383,7 @@ elif current_page == "onboarding":
 
 elif current_page == "search" or current_page == "learn":
     st.title("KritiAI Architecture Matrix")
-    st.write("Dynamic activation matrix mapping multimodal foundation embeddings across forensic verification routes.")
+    st.write("Dynamic 5x5 activation matrix mapping multimodal foundation embeddings across forensic verification routes.")
     st.write("---")
 
     selected_route = st.radio(
@@ -397,40 +397,6 @@ elif current_page == "search" or current_page == "learn":
     )
 
     st.write("")
-
-    geospatial_vars = [
-        "TESSERA (Temporal Embeddings of Surface Spectra)",
-        "AlphaEarth Foundation Embeddings",
-        "PDFM (Population Dynamics Foundation Model)",
-        "DEM (Digital Elevation Model) Embedding",
-        "S2 / H3 Grid Embeddings",
-        "Multi-Sensor Fusion Vector",
-        "OSM Graph Node Embeddings",
-        "Geographical Coordinate Latent",
-        "Topographic Convergence Index",
-        "Multi-Resolution Imagery Embeddings"
-    ]
-
-    atmospheric_vars = [
-        "ERA5 Vision Transformer (ViT)",
-        "LSSANet Spatial Correlation",
-        "Solar Radiation Vector",
-        "Precipitation Anomaly Embedding",
-        "LST (Land Surface Temperature)",
-        "Relative Humidity / Vapor Pressure Deficit",
-        "TimesFM Weather Projection",
-        "Wind Vector Representation"
-    ]
-
-    soil_vars = [
-        "Digital Soil Mapping (DSM) Vector",
-        "Soil Moisture (SM) Downscaling Constraints",
-        "Soil Organic Matter (SOM) Proxy",
-        "Soil Texture (Clay/Silt/Sand) Embeddings",
-        "Genosoil Reference Vectors",
-        "Soil Temperature (SDT) Depth Profile",
-        "Sediment Delivery Ratio (SDR)"
-    ]
 
     active_set = set()
     if "Flash Flood Verification" in selected_route:
@@ -460,30 +426,162 @@ elif current_page == "search" or current_page == "learn":
             "Multi-Resolution Imagery Embeddings"
         }
 
+    all_embeddings = [
+        {"name": "TESSERA (Temporal Embeddings of Surface Spectra)", "cat": "Geospatial", "img": "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=400&q=80"},
+        {"name": "AlphaEarth Foundation Embeddings", "cat": "Geospatial", "img": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=400&q=80"},
+        {"name": "PDFM (Population Dynamics Foundation Model)", "cat": "Geospatial", "img": "https://images.unsplash.com/photo-1477959858617-67f30bc4fc3a?auto=format&fit=crop&w=400&q=80"},
+        {"name": "DEM (Digital Elevation Model) Embedding", "cat": "Geospatial", "img": "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=400&q=80"},
+        {"name": "S2 / H3 Grid Embeddings", "cat": "Geospatial", "img": "https://images.unsplash.com/photo-1508739773434-c26b3d09e071?auto=format&fit=crop&w=400&q=80"},
+        {"name": "Multi-Sensor Fusion Vector", "cat": "Geospatial", "img": "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=400&q=80"},
+        {"name": "OSM Graph Node Embeddings", "cat": "Geospatial", "img": "https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=400&q=80"},
+        {"name": "Geographical Coordinate Latent", "cat": "Geospatial", "img": "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=400&q=80"},
+        {"name": "Topographic Convergence Index", "cat": "Geospatial", "img": "https://images.unsplash.com/photo-1433086966358-54859d0ed716?auto=format&fit=crop&w=400&q=80"},
+        {"name": "Multi-Resolution Imagery Embeddings", "cat": "Geospatial", "img": "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=400&q=80"},
+        {"name": "ERA5 Vision Transformer (ViT)", "cat": "Atmospheric", "img": "https://images.unsplash.com/photo-1534088568595-a066f410bcda?auto=format&fit=crop&w=400&q=80"},
+        {"name": "LSSANet Spatial Correlation", "cat": "Atmospheric", "img": "https://images.unsplash.com/photo-1507413245164-6160d8298b31?auto=format&fit=crop&w=400&q=80"},
+        {"name": "Solar Radiation Vector", "cat": "Atmospheric", "img": "https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=400&q=80"},
+        {"name": "Precipitation Anomaly Embedding", "cat": "Atmospheric", "img": "https://images.unsplash.com/photo-1519692933481-e162a57d6721?auto=format&fit=crop&w=400&q=80"},
+        {"name": "LST (Land Surface Temperature)", "cat": "Atmospheric", "img": "https://images.unsplash.com/photo-1504386106331-3e4e71712b38?auto=format&fit=crop&w=400&q=80"},
+        {"name": "Relative Humidity / Vapor Pressure Deficit", "cat": "Atmospheric", "img": "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=400&q=80"},
+        {"name": "TimesFM Weather Projection", "cat": "Atmospheric", "img": "https://images.unsplash.com/photo-1590055531615-f16d36ffe8ec?auto=format&fit=crop&w=400&q=80"},
+        {"name": "Wind Vector Representation", "cat": "Atmospheric", "img": "https://images.unsplash.com/photo-1498855926480-d98e83099315?auto=format&fit=crop&w=400&q=80"},
+        {"name": "Digital Soil Mapping (DSM) Vector", "cat": "Soil", "img": "https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&w=400&q=80"},
+        {"name": "Soil Moisture (SM) Downscaling Constraints", "cat": "Soil", "img": "https://images.unsplash.com/photo-1628352081506-83c43123ed6d?auto=format&fit=crop&w=400&q=80"},
+        {"name": "Soil Organic Matter (SOM) Proxy", "cat": "Soil", "img": "https://images.unsplash.com/photo-1592982537447-6f23f81e3a24?auto=format&fit=crop&w=400&q=80"},
+        {"name": "Soil Texture (Clay/Silt/Sand) Embeddings", "cat": "Soil", "img": "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=400&q=80"},
+        {"name": "Genosoil Reference Vectors", "cat": "Soil", "img": "https://images.unsplash.com/photo-1500651230702-0e2d8a49d4ad?auto=format&fit=crop&w=400&q=80"},
+        {"name": "Soil Temperature (SDT) Depth Profile", "cat": "Soil", "img": "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=400&q=80"},
+        {"name": "Sediment Delivery Ratio (SDR)", "cat": "Soil", "img": "https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=400&q=80"}
+    ]
+
+    grid_html = """
+    <style>
+        .matrix-grid-5x5 {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 24px;
+            padding: 20px 5px;
+            margin-top: 15px;
+            margin-bottom: 30px;
+        }
+        .matrix-node {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 16px 10px;
+            border-radius: 14px;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .matrix-circle {
+            width: 95px;
+            height: 95px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-bottom: 12px;
+            position: relative;
+            background-color: #111111;
+            transition: all 0.35s ease;
+        }
+        .matrix-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .node-active {
+            background: rgba(0, 255, 102, 0.04);
+            border: 1px solid rgba(0, 255, 102, 0.35);
+        }
+        .node-active .matrix-circle {
+            border: 3px solid #00ff66;
+            box-shadow: 0 0 24px rgba(0, 255, 102, 0.85);
+            transform: scale(1.08);
+        }
+        .node-inactive {
+            opacity: 0.32;
+        }
+        .node-inactive .matrix-circle {
+            border: 2px solid #2a2a2a;
+            filter: grayscale(95%) brightness(0.45);
+        }
+        .node-title {
+            font-size: 0.82rem;
+            font-weight: 500;
+            line-height: 1.35;
+            margin-bottom: 6px;
+            min-height: 38px;
+        }
+        .node-active .node-title {
+            color: #ffffff;
+            font-weight: 600;
+        }
+        .node-inactive .node-title {
+            color: #777777;
+        }
+        .node-badge {
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.6px;
+        }
+        .badge-active {
+            color: #00ff66;
+        }
+        .badge-inactive {
+            color: #555555;
+        }
+    </style>
+    <div class="matrix-grid-5x5">
+    """
+
+    for emb in all_embeddings:
+        is_active = emb["name"] in active_set
+        node_class = "node-active" if is_active else "node-inactive"
+        badge_class = "badge-active" if is_active else "badge-inactive"
+        badge_text = "ACTIVE" if is_active else "STANDBY"
+        
+        grid_html += f"""
+        <div class="matrix-node {node_class}">
+            <div class="matrix-circle">
+                <img src="{emb['img']}" alt="{emb['name']}" loading="lazy">
+            </div>
+            <div class="node-title">{emb['name']}</div>
+            <div class="node-badge {badge_class}">{badge_text}</div>
+        </div>
+        """
+        
+    grid_html += "</div>"
+    st.markdown(grid_html, unsafe_allow_html=True)
+
+    st.write("---")
+
+    geospatial_vars = [item["name"] for item in all_embeddings if item["cat"] == "Geospatial"]
+    atmospheric_vars = [item["name"] for item in all_embeddings if item["cat"] == "Atmospheric"]
+    soil_vars = [item["name"] for item in all_embeddings if item["cat"] == "Soil"]
+
     col1, col2, col3 = st.columns(3)
 
     with col1:
         st.subheader("Geospatial / Multi-Modal Embeddings")
         for item in geospatial_vars:
             if item in active_set:
-                st.success(f"✅ **{item}** - Active")
+                st.success(f"**{item}** - Active")
             else:
-                st.write(f"⚪ {item} - Standby")
+                st.write(f"{item} - Standby")
 
     with col2:
         st.subheader("Weather / Atmospheric Embeddings")
         for item in atmospheric_vars:
             if item in active_set:
-                st.success(f"✅ **{item}** - Active")
+                st.success(f"**{item}** - Active")
             else:
-                st.write(f"⚪ {item} - Standby")
+                st.write(f"{item} - Standby")
 
     with col3:
         st.subheader("Soil Property Embeddings")
         for item in soil_vars:
             if item in active_set:
-                st.success(f"✅ **{item}** - Active")
+                st.success(f"**{item}** - Active")
             else:
-                st.write(f"⚪ {item} - Standby")
+                st.write(f"{item} - Standby")
 
 st.markdown("</div>", unsafe_allow_html=True)
