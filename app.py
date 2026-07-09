@@ -454,84 +454,82 @@ elif current_page == "search" or current_page == "learn":
         {"name": "Sediment Delivery Ratio (SDR)", "cat": "Soil", "img": "https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=400&q=80"}
     ]
 
-    grid_html = """
-    <style>
-        .matrix-grid-5x5 {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 24px;
-            padding: 20px 5px;
-            margin-top: 15px;
-            margin-bottom: 30px;
-        }
-        .matrix-node {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            padding: 16px 10px;
-            border-radius: 14px;
-            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .matrix-circle {
-            width: 95px;
-            height: 95px;
-            border-radius: 50%;
-            overflow: hidden;
-            margin-bottom: 12px;
-            position: relative;
-            background-color: #111111;
-            transition: all 0.35s ease;
-        }
-        .matrix-circle img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .node-active {
-            background: rgba(0, 255, 102, 0.04);
-            border: 1px solid rgba(0, 255, 102, 0.35);
-        }
-        .node-active .matrix-circle {
-            border: 3px solid #00ff66;
-            box-shadow: 0 0 24px rgba(0, 255, 102, 0.85);
-            transform: scale(1.08);
-        }
-        .node-inactive {
-            opacity: 0.32;
-        }
-        .node-inactive .matrix-circle {
-            border: 2px solid #2a2a2a;
-            filter: grayscale(95%) brightness(0.45);
-        }
-        .node-title {
-            font-size: 0.82rem;
-            font-weight: 500;
-            line-height: 1.35;
-            margin-bottom: 6px;
-            min-height: 38px;
-        }
-        .node-active .node-title {
-            color: #ffffff;
-            font-weight: 600;
-        }
-        .node-inactive .node-title {
-            color: #777777;
-        }
-        .node-badge {
-            font-size: 0.72rem;
-            font-weight: 600;
-            letter-spacing: 0.6px;
-        }
-        .badge-active {
-            color: #00ff66;
-        }
-        .badge-inactive {
-            color: #555555;
-        }
-    </style>
-    <div class="matrix-grid-5x5">
-    """
+    grid_html = """<style>
+.matrix-grid-5x5 {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 24px;
+    padding: 20px 5px;
+    margin-top: 15px;
+    margin-bottom: 30px;
+}
+.matrix-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 16px 10px;
+    border-radius: 14px;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.matrix-circle {
+    width: 95px;
+    height: 95px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-bottom: 12px;
+    position: relative;
+    background-color: #111111;
+    transition: all 0.35s ease;
+}
+.matrix-circle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.node-active {
+    background: rgba(0, 255, 102, 0.05);
+    border: 1px solid rgba(0, 255, 102, 0.4);
+}
+.node-active .matrix-circle {
+    border: 3px solid #00ff66;
+    box-shadow: 0 0 24px rgba(0, 255, 102, 0.85);
+    transform: scale(1.08);
+}
+.node-inactive {
+    opacity: 0.32;
+}
+.node-inactive .matrix-circle {
+    border: 2px solid #2a2a2a;
+    filter: grayscale(95%) brightness(0.45);
+}
+.node-title {
+    font-size: 0.82rem;
+    font-weight: 500;
+    line-height: 1.35;
+    margin-bottom: 6px;
+    min-height: 38px;
+}
+.node-active .node-title {
+    color: #ffffff;
+    font-weight: 600;
+}
+.node-inactive .node-title {
+    color: #777777;
+}
+.node-badge {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.6px;
+}
+.badge-active {
+    color: #00ff66;
+}
+.badge-inactive {
+    color: #555555;
+}
+</style>
+<div class="matrix-grid-5x5">"""
 
     for emb in all_embeddings:
         is_active = emb["name"] in active_set
@@ -539,15 +537,7 @@ elif current_page == "search" or current_page == "learn":
         badge_class = "badge-active" if is_active else "badge-inactive"
         badge_text = "ACTIVE" if is_active else "STANDBY"
         
-        grid_html += f"""
-        <div class="matrix-node {node_class}">
-            <div class="matrix-circle">
-                <img src="{emb['img']}" alt="{emb['name']}" loading="lazy">
-            </div>
-            <div class="node-title">{emb['name']}</div>
-            <div class="node-badge {badge_class}">{badge_text}</div>
-        </div>
-        """
+        grid_html += f'<div class="matrix-node {node_class}"><div class="matrix-circle"><img src="{emb["img"]}" alt="{emb["name"]}" loading="lazy"></div><div class="node-title">{emb["name"]}</div><div class="node-badge {badge_class}">{badge_text}</div></div>'
         
     grid_html += "</div>"
     st.markdown(grid_html, unsafe_allow_html=True)
