@@ -249,3 +249,18 @@ def audit_claim(document_text: str, vector_context: str, firehose_context: str =
                 "**3. Claim Consistency:** Official bureaucratic rubber stamps, Khasra survey numbers, and biological crop damage indicators exhibit 100% programmatic and systemic consistency without indicators of documentation fraud."
             )
         }
+
+
+# Export KISAN-Audit Plot Cultivability Validator functions
+try:
+    from kisan_audit_engine import (
+        fetch_cadastral_boundary,
+        fetch_planetary_pixels,
+        upsample_to_submeter,
+        generate_prithvi_eo2_embedding,
+        validate_cultivability,
+        execute_kisan_audit_pipeline
+    )
+except ImportError as e:
+    logger.warning(f"Could not import kisan_audit_engine directly: {e}")
+
