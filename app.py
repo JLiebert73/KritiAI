@@ -200,8 +200,177 @@ st.markdown("""
         letter-spacing: 1px;
         text-transform: uppercase;
     }
+
+    /* Ultra-Premium Glassmorphism Wrapper & Underlying Neon Glow Blobs */
+    .glass-wrapper {
+        position: relative;
+        border-radius: 22px;
+        padding: 1px;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.08) 50%, rgba(76, 110, 245, 0.5) 100%);
+        overflow: hidden;
+        margin-bottom: 0.5rem;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 40px rgba(76, 110, 245, 0.15);
+        transition: transform 0.35s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.35s ease;
+    }
+
+    .glass-wrapper:hover {
+        transform: translateY(-6px) scale(1.01);
+        box-shadow: 0 30px 60px rgba(76, 110, 245, 0.35);
+    }
+
+    .glass-glow {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(28px);
+        z-index: 0;
+        pointer-events: none;
+        opacity: 0.95;
+    }
+
+    .glow-blue {
+        width: 160px;
+        height: 160px;
+        top: -30px;
+        left: -30px;
+        background: radial-gradient(circle, #4c6ef5, #15aabf);
+    }
+
+    .glow-purple {
+        width: 150px;
+        height: 150px;
+        bottom: -30px;
+        right: -30px;
+        background: radial-gradient(circle, #be4bdb, #7950f2);
+    }
+
+    .glow-cyan {
+        width: 140px;
+        height: 140px;
+        top: 30%;
+        right: -20px;
+        background: radial-gradient(circle, #12b886, #228be6);
+    }
+
+    .glow-orange {
+        width: 150px;
+        height: 150px;
+        bottom: -20px;
+        left: -20px;
+        background: radial-gradient(circle, #fa5252, #fd7e14);
+    }
+
+    .glass-flash-card {
+        position: relative;
+        z-index: 1;
+        background: rgba(16, 20, 34, 0.48);
+        backdrop-filter: blur(24px) saturate(220%);
+        -webkit-backdrop-filter: blur(24px) saturate(220%);
+        border-top: 1px solid rgba(255, 255, 255, 0.65);
+        border-left: 1px solid rgba(255, 255, 255, 0.45);
+        border-right: 1px solid rgba(255, 255, 255, 0.18);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 20px;
+        padding: 1.75rem 1.5rem;
+        box-shadow: inset 0 2px 20px rgba(255, 255, 255, 0.25),
+                    inset 0 -2px 20px rgba(76, 110, 245, 0.25);
+        min-height: 250px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .glass-card-header {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #ffffff;
+        margin-bottom: 0.35rem;
+        letter-spacing: 0.5px;
+        text-shadow: 0 2px 10px rgba(255, 255, 255, 0.35);
+    }
+
+    .glass-card-subtitle {
+        font-size: 0.85rem;
+        color: #8daeff;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        font-weight: 700;
+        margin-bottom: 1.2rem;
+        text-shadow: 0 0 15px rgba(141, 174, 255, 0.6);
+    }
+
+    .glass-card-divider {
+        border: none;
+        height: 1px;
+        background: linear-gradient(90deg, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0.05) 100%);
+        margin: 0.5rem 0 1.2rem 0;
+    }
+
+    .glass-metric-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.55rem 0;
+        border-bottom: 1px dashed rgba(255, 255, 255, 0.12);
+    }
+
+    .glass-metric-row:last-child {
+        border-bottom: none;
+    }
+
+    .glass-metric-label {
+        font-size: 0.9rem;
+        color: #d1d5db;
+        font-weight: 500;
+    }
+
+    .glass-metric-val {
+        font-size: 0.92rem;
+        font-weight: 700;
+        color: #ffffff;
+        background: linear-gradient(135deg, rgba(76, 110, 245, 0.35) 0%, rgba(76, 110, 245, 0.15) 100%);
+        padding: 0.2rem 0.75rem;
+        border-radius: 8px;
+        border: 1px solid rgba(140, 170, 255, 0.5);
+        box-shadow: 0 0 15px rgba(76, 110, 245, 0.4), inset 0 1px 4px rgba(255, 255, 255, 0.3);
+    }
+
+    /* Glassmorphism Styling for Streamlit Expanders */
+    div[data-testid="stExpander"] {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(23, 26, 40, 0.7) 100%) !important;
+        border-top: 1px solid rgba(255, 255, 255, 0.3) !important;
+        border-left: 1px solid rgba(255, 255, 255, 0.2) !important;
+        border-right: 1px solid rgba(255, 255, 255, 0.1) !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+        border-radius: 16px !important;
+        backdrop-filter: blur(20px) saturate(180%) !important;
+        -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), inset 0 1px 10px rgba(255, 255, 255, 0.15) !important;
+        overflow: hidden !important;
+        margin-top: 0.25rem !important;
+        margin-bottom: 1.5rem !important;
+    }
+
+    div[data-testid="stExpander"] summary {
+        color: #8daeff !important;
+        font-weight: 700 !important;
+        letter-spacing: 0.75px !important;
+        padding: 0.75rem 1rem !important;
+    }
+
+    div[data-testid="stExpander"] summary:hover {
+        color: #ffffff !important;
+        text-shadow: 0 0 12px rgba(141, 174, 255, 0.8) !important;
+    }
 </style>
 """, unsafe_allow_html=True)
+
+if os.path.exists("style.css"):
+    try:
+        with open("style.css", "r", encoding="utf-8") as _f_css:
+            st.markdown(f"<style>{_f_css.read()}</style>", unsafe_allow_html=True)
+    except Exception:
+        pass
 
 
 
