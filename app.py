@@ -292,24 +292,28 @@ if current_page == "dashboard":
                 
                 with card_col1:
                     st.markdown("""
-                        <div class="glass-flash-card">
-                            <div>
-                                <div class="glass-card-header">1. Spatial Vector Alignment</div>
-                                <div class="glass-card-subtitle">Prithvi-EO-2.0 Brain</div>
-                                <hr class="glass-card-divider">
-                            </div>
-                            <div>
-                                <div class="glass-metric-row">
-                                    <span class="glass-metric-label">Resolution:</span>
-                                    <span class="glass-metric-val">0.5m (Order=0)</span>
+                        <div class="glass-wrapper">
+                            <div class="glass-glow glow-blue"></div>
+                            <div class="glass-glow glow-purple"></div>
+                            <div class="glass-flash-card">
+                                <div>
+                                    <div class="glass-card-header">1. Spatial Vector Alignment</div>
+                                    <div class="glass-card-subtitle">Prithvi-EO-2.0 Brain</div>
+                                    <hr class="glass-card-divider">
                                 </div>
-                                <div class="glass-metric-row">
-                                    <span class="glass-metric-label">Spectral Cube:</span>
-                                    <span class="glass-metric-val">6-Band HLS</span>
-                                </div>
-                                <div class="glass-metric-row">
-                                    <span class="glass-metric-label">Inference Shift:</span>
-                                    <span class="glass-metric-val">+2.85 SD Variance</span>
+                                <div>
+                                    <div class="glass-metric-row">
+                                        <span class="glass-metric-label">Resolution:</span>
+                                        <span class="glass-metric-val">0.5m (Order=0)</span>
+                                    </div>
+                                    <div class="glass-metric-row">
+                                        <span class="glass-metric-label">Spectral Cube:</span>
+                                        <span class="glass-metric-val">6-Band HLS</span>
+                                    </div>
+                                    <div class="glass-metric-row">
+                                        <span class="glass-metric-label">Inference Shift:</span>
+                                        <span class="glass-metric-val">+2.85 SD Variance</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -323,24 +327,28 @@ if current_page == "dashboard":
                 
                 with card_col2:
                     st.markdown("""
-                        <div class="glass-flash-card">
-                            <div>
-                                <div class="glass-card-header">2. Firehose Corroboration</div>
-                                <div class="glass-card-subtitle">Social & News APIs</div>
-                                <hr class="glass-card-divider">
-                            </div>
-                            <div>
-                                <div class="glass-metric-row">
-                                    <span class="glass-metric-label">Chatter Volume:</span>
-                                    <span class="glass-metric-val">17,400 Mentions</span>
+                        <div class="glass-wrapper">
+                            <div class="glass-glow glow-cyan"></div>
+                            <div class="glass-glow glow-orange"></div>
+                            <div class="glass-flash-card">
+                                <div>
+                                    <div class="glass-card-header">2. Firehose Corroboration</div>
+                                    <div class="glass-card-subtitle">Social & News APIs</div>
+                                    <hr class="glass-card-divider">
                                 </div>
-                                <div class="glass-metric-row">
-                                    <span class="glass-metric-label">Hashtag Anchor:</span>
-                                    <span class="glass-metric-val">#AgriAlert</span>
-                                </div>
-                                <div class="glass-metric-row">
-                                    <span class="glass-metric-label">Correlation:</span>
-                                    <span class="glass-metric-val">100% Verified</span>
+                                <div>
+                                    <div class="glass-metric-row">
+                                        <span class="glass-metric-label">Chatter Volume:</span>
+                                        <span class="glass-metric-val">17,400 Mentions</span>
+                                    </div>
+                                    <div class="glass-metric-row">
+                                        <span class="glass-metric-label">Hashtag Anchor:</span>
+                                        <span class="glass-metric-val">#AgriAlert</span>
+                                    </div>
+                                    <div class="glass-metric-row">
+                                        <span class="glass-metric-label">Correlation:</span>
+                                        <span class="glass-metric-val">100% Verified</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -355,24 +363,28 @@ if current_page == "dashboard":
                 
                 with card_col3:
                     st.markdown("""
-                        <div class="glass-flash-card">
-                            <div>
-                                <div class="glass-card-header">3. Document & PII Consistency</div>
-                                <div class="glass-card-subtitle">Gemini Orchestration</div>
-                                <hr class="glass-card-divider">
-                            </div>
-                            <div>
-                                <div class="glass-metric-row">
-                                    <span class="glass-metric-label">VLM Engine:</span>
-                                    <span class="glass-metric-val">Gemini 2.5 Flash</span>
+                        <div class="glass-wrapper">
+                            <div class="glass-glow glow-purple"></div>
+                            <div class="glass-glow glow-blue"></div>
+                            <div class="glass-flash-card">
+                                <div>
+                                    <div class="glass-card-header">3. Document & PII Consistency</div>
+                                    <div class="glass-card-subtitle">Gemini Orchestration</div>
+                                    <hr class="glass-card-divider">
                                 </div>
-                                <div class="glass-metric-row">
-                                    <span class="glass-metric-label">Privacy Shield:</span>
-                                    <span class="glass-metric-val">Aadhaar Scrubbed</span>
-                                </div>
-                                <div class="glass-metric-row">
-                                    <span class="glass-metric-label">Admin Integrity:</span>
-                                    <span class="glass-metric-val">100% Consistent</span>
+                                <div>
+                                    <div class="glass-metric-row">
+                                        <span class="glass-metric-label">VLM Engine:</span>
+                                        <span class="glass-metric-val">Gemini 2.5 Flash</span>
+                                    </div>
+                                    <div class="glass-metric-row">
+                                        <span class="glass-metric-label">Privacy Shield:</span>
+                                        <span class="glass-metric-val">Aadhaar Scrubbed</span>
+                                    </div>
+                                    <div class="glass-metric-row">
+                                        <span class="glass-metric-label">Admin Integrity:</span>
+                                        <span class="glass-metric-val">100% Consistent</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
