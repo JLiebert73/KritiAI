@@ -74,35 +74,29 @@ The primary multi-modal architecture combining deep geospatial foundation models
 
 ---
 
-## 4. KISAN-Audit Plot Cultivability Validator (`kisan_audit_engine.py`)
-A standalone verification engine designed to automate the PM-KISAN `5%` mandatory physical audit without human desk officers.
+## 4. KISAN-Audit Pipeline (`kisan_audit_engine.py`) — THE LIVE PROTOTYPE
+A standalone verification engine designed to optimize the PM-KISAN 5% physical audit via algorithmic triage, leveraging the official NASA/IBM Sen4Map protocols and Latent Space Masking.
 
 ### A. Step 1: Cadastral Boundary Retrieval (`fetch_cadastral_boundary`)
-* Queries/simulates the **KrishiMapper** digital registry API using `khasra_id`, `district`, and `state`.
-* Returns exact geo-referenced GeoJSON polygons, verified plot area (`hectares`), and cadastral centroid coordinates.
+* **Simulated Schema Compliance:** Because the official KrishiMapper API is restricted by NIC VPN tunneling, the engine implements a schema-compliant connector mimicking Scheme Code 17 (SHC-Farmer) and 29 (Ground Truth) data contracts.
+* Generates deterministic, geo-referenced GeoJSON cadastral polygons, precise plot centroids, and exact hectare measurements. This ensures production-readiness, requiring zero architectural refactoring once official OAuth bearer tokens are provisioned.
 
-### B. Step 2: Planetary Pixel Ingestion (`fetch_planetary_pixels`)
-* Dynamically pulls multi-temporal, 6-band **Harmonized Landsat-Sentinel (HLS)** imagery cubes (`Blue`, `Green`, `Red`, `Narrow_NIR`, `SWIR_1`, `SWIR_2`) spanning two agricultural seasons (`Kharif` monsoon & `Rabi` winter).
-* Computes seasonal mean normalized difference vegetation indices (`mean_kharif_ndvi`, `mean_rabi_ndvi`) where `NDVI = (NIR - Red) / (NIR + Red)`.
+### B. Step 2: Native Planetary Pixel Ingestion (`fetch_planetary_pixels`)
+* Dynamically retrieves multi-temporal, 6-band Harmonized Landsat-Sentinel (HLS) imagery cubes (`Blue`, `Green`, `Red`, `Narrow_NIR`, `SWIR_1`, `SWIR_2`).
+* **Neighborhood Preservation:** Instead of cropping tightly to a 0.5-hectare farm, the STAC client fetches a full 224×224 pixel regional tile at its native 30-meter spatial resolution. This preserves the surrounding geographic context (neighboring fields, water bodies) required by the Vision Transformer to calibrate regional phenology.
 
-### C. Step 3: Resolution Adjustment — Nearest-Neighbor Spectral Preservation (`upsample_to_submeter`)
-* **Scientific Upsampling (Critical):** Computes `0.5m` spatial resolution utilizing `scipy.ndimage.zoom` with **nearest-neighbor interpolation (`order=0`)**.
-* **Scientific Justification:** This is scientifically validated for smallholder farms to expand the spatial footprint and capture fine-grained boundaries while preserving the raw spectral reflectance integrity of the HLS data that the vision transformer relies on.
+### C. Step 3: Fractional Rasterization & Latent Masking
+* **Rasterize the Vector Mask:** Creates a binary mask of the exact KrishiMapper farm polygon at the native 30m HLS image resolution.
+* **Downsample to Latent Grid:** Computationally pools the 30m binary mask down to match the exact latent token grid layout (e.g., 14×14 or 16×16) of the Vision Transformer. This calculates the exact fractional area weight (percentage) of each massive latent token that actually belongs to the target farmer's land.
 
-### D. Step 4: AI Embedding Generation (`generate_prithvi_eo2_embedding`)
-* Passes temporal and band-wise statistics of the upsampled 6-band cubes through the **Prithvi-EO-2.0 Vision Transformer** representation.
-* Compresses multi-seasonal chlorophyll and absorption dynamics into a normalized `64-dimensional` spatiotemporal latent embedding vector (`embedding / norm(embedding)`).
+### D. Step 4: Mask-Weighted Attention Pooling (AI Embedding Generation)
+* **Frozen Inference:** Passes the native 30m regional imagery cube through the fully frozen `ibm-nasa-geospatial/Prithvi-EO-2.0-tiny-TL` encoder, utilizing the model's native 3D spatiotemporal tubelets to extract features without triggering heavy VRAM backpropagation taxes.
+* **Weighted Aggregation:** Multiplies the output high-dimensional latent token vectors by their corresponding fractional area weights before averaging them. This mathematical pooling forces the system to isolate and amplify the exact spectral-phenological signals matching the 0.5-hectare farm, actively suppressing the surrounding neighborhood background noise.
 
-### E. Step 5: Mathematical Validation & Scoring (`validate_cultivability`)
-* **Mathematical Anchor:** Uses a pre-validated normalized `ACTIVE_CROPLAND_BASELINE` vector where chlorophyll/NIR indices (`0–31`) carry positive weights and urban/soil indices (`32–63`) carry near-zero/negative weights.
-* **Cosine Similarity Calculation:**
-  $$\text{score} = \frac{\vec{v}_{\text{target}} \cdot \vec{v}_{\text{baseline}}}{\|\vec{v}_{\text{target}}\| \|\vec{v}_{\text{baseline}}\|}$$
-* **Threshold Logic (`0.70`):**
-  * **If score >= 0.70:** `status_code: APPROVED_ACTIVE_CULTIVATION`, flag: `"APPROVED — ACTIVE CULTIVATION VERIFIED"`.
-  * **If score < 0.70:** `status_code: PHYSICAL_AUDIT_REQUIRED`, flag: `"NON-CULTIVATED / URBANIZED — ROUTE FOR PHYSICAL AUDIT"`.
-* **QC Verification Results:**
-  * Active cropland test (`101/A`): `Score = 0.9858` (`APPROVED`)
-  * Fallow / urbanized plot test (`102/B`): `Score = 0.0249` (`PHYSICAL_AUDIT_REQUIRED`)
+### E. Step 5: Dynamic Regional Ranking & Algorithmic Triage
+* **Dynamic Baseline Generation:** Instead of bypassing the law with a hard global threshold, the system calculates the spatiotemporal cosine similarity between the target plot's isolated latent tokens and a dynamic `REGIONAL_ACTIVE_CROPLAND_BASELINE` to account for localized soil and climate variations.
+* **Statistical Percentile Ranking:** The engine processes 100% of the district's digital registry and ranks all plots based on their Cultivation Consistency Score.
+* **Automated Pool Population:** The system isolates the bottom 5th percentile (the greatest statistical anomalies) to automatically populate the legally mandated PM-KISAN 5% physical verification pool. It generates a targeted JSON manifest routing these high-risk plots directly to the Village Nodal Officer's (VNO) mobile application for physical eKYC.
 
 ---
 

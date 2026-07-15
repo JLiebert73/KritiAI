@@ -349,79 +349,37 @@ pre {
     }
 }
 
-/* Ultra-Premium Glassmorphism Wrapper & Underlying Neon Glow Blobs */
+/* Professional Executive Frosted Glassmorphism */
 .glass-wrapper {
     position: relative;
-    border-radius: 22px;
+    border-radius: 20px;
     padding: 1px;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0.05) 50%, rgba(76, 110, 245, 0.4) 100%);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.05) 50%, rgba(255, 255, 255, 0.12) 100%);
     overflow: hidden;
     margin-bottom: 0.5rem;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
-    transition: transform 0.35s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.35s ease;
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.6);
+    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s ease;
 }
 
 .glass-wrapper:hover {
-    transform: translateY(-6px) scale(1.01);
-    box-shadow: 0 30px 60px rgba(76, 110, 245, 0.35);
-}
-
-.glass-glow {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(28px);
-    z-index: 0;
-    pointer-events: none;
-    opacity: 0.95;
-}
-
-.glow-blue {
-    width: 160px;
-    height: 160px;
-    top: -30px;
-    left: -30px;
-    background: radial-gradient(circle, #4c6ef5, #15aabf);
-}
-
-.glow-purple {
-    width: 150px;
-    height: 150px;
-    bottom: -30px;
-    right: -30px;
-    background: radial-gradient(circle, #be4bdb, #7950f2);
-}
-
-.glow-cyan {
-    width: 140px;
-    height: 140px;
-    top: 30%;
-    right: -20px;
-    background: radial-gradient(circle, #12b886, #228be6);
-}
-
-.glow-orange {
-    width: 150px;
-    height: 150px;
-    bottom: -20px;
-    left: -20px;
-    background: radial-gradient(circle, #fa5252, #fd7e14);
+    transform: translateY(-4px);
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 255, 255, 0.08);
 }
 
 .glass-flash-card {
     position: relative;
     z-index: 1;
-    background: rgba(16, 20, 34, 0.48);
-    backdrop-filter: blur(24px) saturate(220%);
-    -webkit-backdrop-filter: blur(24px) saturate(220%);
-    border-top: 1px solid rgba(255, 255, 255, 0.65);
-    border-left: 1px solid rgba(255, 255, 255, 0.45);
-    border-right: 1px solid rgba(255, 255, 255, 0.18);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.18);
-    border-radius: 20px;
-    padding: 1.75rem 1.5rem;
-    box-shadow: inset 0 2px 20px rgba(255, 255, 255, 0.25),
-                inset 0 -2px 20px rgba(76, 110, 245, 0.25);
-    min-height: 250px;
+    background: linear-gradient(135deg, rgba(24, 27, 38, 0.75) 0%, rgba(15, 17, 26, 0.85) 100%);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border-top: 1px solid rgba(255, 255, 255, 0.35);
+    border-left: 1px solid rgba(255, 255, 255, 0.22);
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 19px;
+    padding: 1.6rem 1.4rem;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    min-height: 240px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
