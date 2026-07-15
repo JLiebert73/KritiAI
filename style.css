@@ -468,3 +468,71 @@ div[data-testid="stExpander"] summary:hover {
     color: #ffffff !important;
     text-shadow: 0 0 12px rgba(141, 174, 255, 0.8) !important;
 }
+
+/* DAO Executive Decision Support System Styles */
+.badge-alert {
+    background: linear-gradient(135deg, rgba(250, 82, 82, 0.25) 0%, rgba(250, 82, 82, 0.1) 100%);
+    border: 1px solid #fa5252;
+    color: #ff8787;
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    display: inline-block;
+}
+
+.badge-verified {
+    background: linear-gradient(135deg, rgba(32, 201, 151, 0.2) 0%, rgba(32, 201, 151, 0.05) 100%);
+    border: 1px solid #20c997;
+    color: #63e6be;
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    display: inline-block;
+}
+
+.badge-pending {
+    background: linear-gradient(135deg, rgba(253, 126, 20, 0.25) 0%, rgba(253, 126, 20, 0.1) 100%);
+    border: 1px solid #fd7e14;
+    color: #ffc078;
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    display: inline-block;
+}
+
+.gis-panel-header {
+    background: rgba(24, 27, 38, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 14px 20px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.vno-banner {
+    background: linear-gradient(135deg, rgba(32, 201, 151, 0.18) 0%, rgba(15, 17, 26, 0.95) 100%);
+    border-left: 4px solid #20c997;
+    border-top: 1px solid rgba(32, 201, 151, 0.4);
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin: 20px 0;
+    font-size: 1.05rem;
+    color: #e6fcf5;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+}
