@@ -280,6 +280,7 @@ if current_page == "login" or not st.session_state["authenticated"]:
 # ==============================================================================
 # UNIVERSAL TOP-RIGHT ROUTE NAVIGATION HEADER (ACTIVE PORTAL TOP BAR)
 # ==============================================================================
+# We position KritiAI logo on the LEFT, and ALL 6 route buttons directly aligned at the TOP RIGHT across from it!
 st.markdown("<div class='top-header-bar' style='padding-bottom: 6px;'>", unsafe_allow_html=True)
 top_col_logo, top_col_routes = st.columns([1.8, 5.2])
 
@@ -413,12 +414,14 @@ if current_page == "crossexam":
 # PRIMARY PM-KISAN CADASTRAL AUDITING PAGE ROUTE (`/?page=dashboard`)
 # ==============================================================================
 
+# Calculate dynamic statistics requested by the user:
 plots_awaiting_decision = sum(1 for f in farms if f["status"] == "UNVERIFIED")
 plots_already_decided = sum(1 for f in farms if f["status"] != "UNVERIFIED")
 
 st.markdown("### PM-KISAN Cadastral Auditing & Decision Center")
 st.markdown("<p style='color: #a0a0a0; font-size: 0.94rem; margin-bottom: 18px;'>Real-time cadastral auditing across <b style='color: #ffffff;'>Gandhi Mandap, Gandhi Basti, and Rajgarh Road</b> sectors (`Guwahati / Kamrup District`). Review highlighted anomalies and action statutory holds or overrides below.</p>", unsafe_allow_html=True)
 
+# Top Statistics KPI Cards (Plots Awaiting Decision vs. Already Decided)
 stat_c1, stat_c2, stat_c3, stat_c4, stat_c5 = st.columns(5)
 with stat_c1:
     st.metric(label="Plots Awaiting Decision", value=f"{plots_awaiting_decision} Plots", delta="Action Required", delta_color="inverse")
@@ -439,17 +442,18 @@ red_ids = [f["khasra_id"] for f in red_anomaly_farms]
 if "selected_red_plot" not in st.session_state:
     st.session_state["selected_red_plot"] = None
 
-st.markdown("#### Dense Irregular Cadastral Subdivision (`High-Density Survey Plot Lattice`)")
-st.markdown("<p style='color: #a0a0a0; font-size: 0.92rem; margin-bottom: 16px;'>Existing physical land blocks around <b style='color: #ffffff;'>GANDHI MANDAP</b> are densely partitioned into irregular, interlocking survey sub-plots (`adding intricate internal dividing lines while strictly confining 100% of the area inside the existing road boundaries without crossing street curves`). <b style='color: #ff8787;'>RED Polygons</b> indicate rejected fallow/barren anomalies (`score < 0.70`). <b style='color: #63e6be;'>GREEN Polygons</b> indicate verified active cropland (`score >= 0.70`), intertwined across blocks. Click any parcel to unlock diagnostic decision controls below.</p>", unsafe_allow_html=True)
+st.markdown("#### Physical Road-Bounded Cadastral Map (`Gandhi Mandap / Sarania Hills / Gandhi Basti`)")
+st.markdown("<p style='color: #a0a0a0; font-size: 0.92rem; margin-bottom: 16px;'>Every farm plot is custom-bounded within the exact land parcels bordered by the roads around <b style='color: #ffffff;'>GANDHI MANDAP</b> and stretching toward <b style='color: #ffffff;'>Gandhi Basti and Rajgarh Road</b> (`leaving the gray road lines underneath 100% clear as separating channels`). Polygons never cross arterial vectors. <b style='color: #ff8787;'>RED Polygons</b> indicate rejected fallow/barren anomalies (`score < 0.70`). <b style='color: #63e6be;'>GREEN Polygons</b> indicate verified active cropland (`score >= 0.70`), intertwined across blocks. Click any parcel to unlock diagnostic decision controls below.</p>", unsafe_allow_html=True)
 
-# 1. PHYSICAL ROAD-BOUNDED POLYGON PARCEL BASE ENVELOPES (GANDHI MANDAP / SARANIA HILLS)
+# 1. PHYSICAL ROAD-BOUNDED POLYGON PARCEL REGISTRY (GANDHI MANDAP / SARANIA HILLS SECTORS)
+# Center right over GANDHI MANDAP
 gandhi_lat = 26.1795
 gandhi_lon = 91.7615
 
-# We take the exact road-bounded envelopes and partition each into 4 to 5 irregular sub-plots using internal chords/dividers,
-# creating ~150 dense survey plots inside the exact same footprint without adding any new area outside the road loops.
-base_parcels = [
-    # Sector A: Central Sarania Hill Loop
+# We hand-craft exact irregular polygon envelopes bounded strictly inside the dark land blocks between the gray road curves of Gandhi Mandap, Gandhi Basti, and Rajgarh Road
+# Each polygon's perimeter runs parallel to and inside the road lines without intersecting any street
+road_bounded_parcels = [
+    # --- SECTOR A: CENTRAL SARANIA HILL / GANDHI MANDAP CONTOUR LOOP (Inner Hilltop Block) ---
     {"coords": [[91.7588, 26.1805], [91.7602, 26.1815], [91.7628, 26.1818], [91.7645, 26.1808], [91.7648, 26.1792], [91.7635, 26.1778], [91.7610, 26.1775], [91.7592, 26.1788], [91.7588, 26.1805]], "is_red": False},
     {"coords": [[91.7602, 26.1815], [91.7618, 26.1828], [91.7642, 26.1825], [91.7658, 26.1812], [91.7645, 26.1808], [91.7628, 26.1818], [91.7602, 26.1815]], "is_red": True, "khasra": "102/B"},
     {"coords": [[91.7645, 26.1808], [91.7658, 26.1812], [91.7668, 26.1795], [91.7662, 26.1778], [91.7648, 26.1792], [91.7645, 26.1808]], "is_red": False},
@@ -457,7 +461,7 @@ base_parcels = [
     {"coords": [[91.7592, 26.1788], [91.7610, 26.1775], [91.7625, 26.1760], [91.7602, 26.1758], [91.7580, 26.1772], [91.7592, 26.1788]], "is_red": False},
     {"coords": [[91.7580, 26.1772], [91.7592, 26.1788], [91.7588, 26.1805], [91.7568, 26.1802], [91.7565, 26.1782], [91.7580, 26.1772]], "is_red": False},
 
-    # Sector B: North-West Sector toward Gandhi Basti
+    # --- SECTOR B: NORTH-WEST SECTOR TOWARD GANDHI BASTI (Conforming to western feeder lanes) ---
     {"coords": [[91.7535, 26.1848], [91.7558, 26.1852], [91.7568, 26.1832], [91.7545, 26.1828], [91.7535, 26.1848]], "is_red": False},
     {"coords": [[91.7558, 26.1852], [91.7582, 26.1855], [91.7590, 26.1835], [91.7568, 26.1832], [91.7558, 26.1852]], "is_red": True, "khasra": "115/P"},
     {"coords": [[91.7582, 26.1855], [91.7608, 26.1858], [91.7615, 26.1838], [91.7590, 26.1835], [91.7582, 26.1855]], "is_red": False},
@@ -465,28 +469,28 @@ base_parcels = [
     {"coords": [[91.7568, 26.1832], [91.7590, 26.1835], [91.7602, 26.1815], [91.7575, 26.1812], [91.7568, 26.1832]], "is_red": False},
     {"coords": [[91.7522, 26.1835], [91.7545, 26.1828], [91.7552, 26.1808], [91.7530, 26.1812], [91.7522, 26.1835]], "is_red": False},
 
-    # Sector C: North Sector toward Maniram Dewan Road
+    # --- SECTOR C: NORTH SECTOR TOWARD MANIRAM DEWAN ROAD (Between northern cross roads) ---
     {"coords": [[91.7608, 26.1858], [91.7635, 26.1862], [91.7642, 26.1842], [91.7615, 26.1838], [91.7608, 26.1858]], "is_red": False},
     {"coords": [[91.7635, 26.1862], [91.7662, 26.1865], [91.7668, 26.1845], [91.7642, 26.1842], [91.7635, 26.1862]], "is_red": True, "khasra": "ANOMALY/104"},
     {"coords": [[91.7615, 26.1838], [91.7642, 26.1842], [91.7648, 26.1825], [91.7618, 26.1828], [91.7615, 26.1838]], "is_red": False},
     {"coords": [[91.7642, 26.1842], [91.7668, 26.1845], [91.7675, 26.1828], [91.7648, 26.1825], [91.7642, 26.1842]], "is_red": False},
     {"coords": [[91.7662, 26.1865], [91.7688, 26.1868], [91.7692, 26.1848], [91.7668, 26.1845], [91.7662, 26.1865]], "is_red": False},
 
-    # Sector D: East Sector along Rajgarh Road Corridor
+    # --- SECTOR D: EAST SECTOR ALONG RAJGARH ROAD CORRIDOR (Paralleling eastern arterial thoroughfare) ---
     {"coords": [[91.7668, 26.1822], [91.7688, 26.1825], [91.7695, 26.1802], [91.7672, 26.1798], [91.7668, 26.1822]], "is_red": False},
     {"coords": [[91.7672, 26.1798], [91.7695, 26.1802], [91.7702, 26.1780], [91.7678, 26.1776], [91.7672, 26.1798]], "is_red": True, "khasra": "ANOMALY/105"},
     {"coords": [[91.7678, 26.1776], [91.7702, 26.1780], [91.7708, 26.1758], [91.7682, 26.1755], [91.7678, 26.1776]], "is_red": False},
     {"coords": [[91.7682, 26.1755], [91.7708, 26.1758], [91.7712, 26.1735], [91.7688, 26.1732], [91.7682, 26.1755]], "is_red": False},
     {"coords": [[91.7650, 26.1762], [91.7678, 26.1776], [91.7682, 26.1755], [91.7655, 26.1742], [91.7650, 26.1762]], "is_red": False},
 
-    # Sector E: South Access Sector & Hill Slope
+    # --- SECTOR E: SOUTH ACCESS SECTOR & HILL SLOPE ---
     {"coords": [[91.7625, 26.1760], [91.7650, 26.1762], [91.7655, 26.1742], [91.7630, 26.1740], [91.7625, 26.1760]], "is_red": False},
     {"coords": [[91.7602, 26.1758], [91.7625, 26.1760], [91.7630, 26.1740], [91.7608, 26.1738], [91.7602, 26.1758]], "is_red": False},
     {"coords": [[91.7580, 26.1772], [91.7602, 26.1758], [91.7608, 26.1738], [91.7585, 26.1745], [91.7580, 26.1772]], "is_red": False},
     {"coords": [[91.7565, 26.1782], [91.7580, 26.1772], [91.7585, 26.1745], [91.7568, 26.1755], [91.7565, 26.1782]], "is_red": False},
     {"coords": [[91.7548, 26.1798], [91.7565, 26.1782], [91.7568, 26.1755], [91.7545, 26.1770], [91.7548, 26.1798]], "is_red": False},
 
-    # Sector F: Western Residential & Field Blocks toward Birubari
+    # --- SECTOR F: WESTERN RESIDENTIAL & FIELD BLOCKS TOWARD BIRUBARI ---
     {"coords": [[91.7530, 26.1812], [91.7552, 26.1808], [91.7548, 26.1798], [91.7525, 26.1800], [91.7530, 26.1812]], "is_red": False},
     {"coords": [[91.7508, 26.1815], [91.7530, 26.1812], [91.7525, 26.1800], [91.7502, 26.1802], [91.7508, 26.1815]], "is_red": False},
     {"coords": [[91.7502, 26.1802], [91.7525, 26.1800], [91.7520, 26.1782], [91.7498, 26.1785], [91.7502, 26.1802]], "is_red": False},
@@ -495,99 +499,42 @@ base_parcels = [
     {"coords": [[91.7498, 26.1785], [91.7520, 26.1782], [91.7515, 26.1762], [91.7492, 26.1765], [91.7498, 26.1785]], "is_red": False}
 ]
 
-# DETERMINISTIC IRREGULAR SUBDIVISION ENGINE
-# Subdivides each existing base envelope into 4 interlocking irregular survey plots by adding internal dividing lines across edge midpoints,
-# multiplying total density 4x (~144 plots) without adding ANY new area outside existing road boundaries.
-def subdivide_irregular_polygon(polygon_coords, num_slices=4):
-    coords = polygon_coords[:-1]
-    n = len(coords)
-    if n < 4:
-        return [polygon_coords]
-        
-    subplots = []
-    # Compute centroid of the polygon
-    center_lon = sum(pt[0] for pt in coords) / float(n)
-    center_lat = sum(pt[1] for pt in coords) / float(n)
-    
-    # Introduce subtle internal irregularity so dividing lines resemble authentic survey khasra boundaries
-    center_lon += (coords[0][0] - center_lon) * 0.08
-    center_lat += (coords[0][1] - center_lat) * 0.06
-    
-    for i in range(n):
-        pt1 = coords[i]
-        pt2 = coords[(i + 1) % n]
-        
-        # Midpoint on edge i with slight organic shift
-        mid_lon = (pt1[0] + pt2[0]) * 0.5
-        mid_lat = (pt1[1] + pt2[1]) * 0.5
-        
-        # Create triangular/quadrilateral internal plot
-        sub_poly = [
-            [center_lon, center_lat],
-            pt1,
-            mid_lon_lat := [mid_lon, mid_lat],
-            [center_lon, center_lat]
-        ]
-        subplots.append(sub_poly)
-        
-        sub_poly_2 = [
-            [center_lon, center_lat],
-            mid_lon_lat,
-            pt2,
-            [center_lon, center_lat]
-        ]
-        subplots.append(sub_poly_2)
-        
-    return subplots[:num_slices]
-
 verified_pool = [f for f in farms if f["consistency_score"] >= 0.70]
 multi_polygons_data = []
+
 green_counter = 0
-
-for p_idx, parcel in enumerate(base_parcels):
-    is_red_parent = parcel.get("is_red", False)
-    target_kid = parcel.get("khasra")
-    
-    # Subdivide parcel into dense internal sub-plots
-    dense_subpolys = subdivide_irregular_polygon(parcel["coords"], num_slices=4)
-    
-    for s_idx, sub_coords in enumerate(dense_subpolys):
-        # Ensure prominent anomalies retain exact target ID on the primary sub-plot
-        if is_red_parent and s_idx == 0:
-            f_match = next((rf for rf in red_anomaly_farms if rf["khasra_id"] == target_kid), None)
-            if not f_match and len(red_anomaly_farms) > 0:
-                f_match = red_anomaly_farms[(p_idx + s_idx) % len(red_anomaly_farms)]
-            f = f_match
-            is_anom = True
-        elif is_red_parent and s_idx == 1:
-            # Secondary anomaly sub-plot
-            f = red_anomaly_farms[(p_idx + s_idx) % len(red_anomaly_farms)]
-            is_anom = True
-        else:
-            f = verified_pool[green_counter % len(verified_pool)]
-            green_counter += 1
-            is_anom = False
-            
-        if not f:
-            continue
-            
-        is_selected = (st.session_state["selected_red_plot"] == f["khasra_id"])
+for p_idx, parcel in enumerate(road_bounded_parcels):
+    if parcel.get("is_red"):
+        target_kid = parcel.get("khasra")
+        f_match = next((rf for rf in red_anomaly_farms if rf["khasra_id"] == target_kid), None)
+        if not f_match and len(red_anomaly_farms) > 0:
+            f_match = red_anomaly_farms[p_idx % len(red_anomaly_farms)]
+        f = f_match
+    else:
+        f = verified_pool[green_counter % len(verified_pool)]
+        green_counter += 1
         
-        multi_polygons_data.append({
-            "polygon": sub_coords,
-            "khasra_id": f["khasra_id"],
-            "farmer_name": f["farmer_name"],
-            "village_block": f["village_block"],
-            "area_ha": round(f["area_hectares"] / float(len(dense_subpolys)), 3),
-            "score": round(f["consistency_score"], 4),
-            "ground_truth": f.get("ground_truth_label", "N/A"),
-            "status": f["status"],
-            "color": [250, 82, 82, 195] if is_anom else [32, 201, 151, 165],
-            "line_color": [255, 255, 100, 255] if is_selected else ([255, 130, 130, 255] if is_anom else [100, 255, 180, 255]),
-            "line_width": 5 if is_selected else 2,
-            "triage_badge": "REJECTED ANOMALY (BOTTOM 5%)" if is_anom else "VERIFIED ACTIVE CROPLAND"
-        })
-
+    if not f:
+        continue
+        
+    is_anom = parcel.get("is_red", False)
+    is_selected = (st.session_state["selected_red_plot"] == f["khasra_id"])
+    
+    multi_polygons_data.append({
+        "polygon": parcel["coords"],
+        "khasra_id": f["khasra_id"],
+        "farmer_name": f["farmer_name"],
+        "village_block": f["village_block"],
+        "area_ha": f["area_hectares"],
+        "score": round(f["consistency_score"], 4),
+        "ground_truth": f.get("ground_truth_label", "N/A"),
+        "status": f["status"],
+        "color": [250, 82, 82, 195] if is_anom else [32, 201, 151, 165],
+        "line_color": [255, 255, 100, 255] if is_selected else ([255, 130, 130, 255] if is_anom else [100, 255, 180, 255]),
+        "line_width": 5 if is_selected else 3,
+        "triage_badge": "REJECTED ANOMALY (BOTTOM 5%)" if is_anom else "VERIFIED ACTIVE CROPLAND"
+    })
+    
 district_map_layer = pdk.Layer(
     "PolygonLayer",
     data=multi_polygons_data,
@@ -615,7 +562,7 @@ map_event = st.pydeck_chart(
             <div style="background: rgba(15, 17, 26, 0.96); padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); font-family: 'Inter', sans-serif; min-width: 240px;">
                 <div style="font-size: 1.05rem; font-weight: 700; color: #ffffff; border-bottom: 1px solid rgba(255,255,255,0.15); padding-bottom: 6px; margin-bottom: 8px;">Survey No: KH-{khasra_id}</div>
                 <div style="font-size: 0.9rem; color: #adb5bd; margin-bottom: 4px;">Farmer Name: <b style="color: #ffffff;">{farmer_name}</b></div>
-                <div style="font-size: 0.9rem; color: #adb5bd; margin-bottom: 4px;">Block: <b style="color: #ffffff;">{village_block}</b> | Sub-Parcel Area: <b style="color: #ffffff;">{area_ha} Ha</b></div>
+                <div style="font-size: 0.9rem; color: #adb5bd; margin-bottom: 4px;">Block: <b style="color: #ffffff;">{village_block}</b> | Area: <b style="color: #ffffff;">{area_ha} Ha</b></div>
                 <div style="font-size: 0.9rem; color: #adb5bd; margin-bottom: 6px;">Ground Truth: <b style="color: #8daeff;">{ground_truth}</b></div>
                 <div style="font-size: 0.95rem; font-weight: 700; color: #ffffff; background: rgba(255,255,255,0.08); padding: 6px 8px; border-radius: 6px;">Consistency Score: <span style="color: #ff8787;">{score}</span> | {triage_badge}</div>
             </div>
@@ -639,6 +586,7 @@ st.markdown("<br>", unsafe_allow_html=True)
 st.markdown("#### Diagnostic Decision Center & Statutory Action")
 st.markdown("<p style='color: #a0a0a0; font-size: 0.92rem; margin-bottom: 16px;'>Click any red anomaly directly on the Gandhi Mandap map above or select from the quick-action panel to inspect details and log your statutory decision using the glassy grey controls below:</p>", unsafe_allow_html=True)
 
+# Interactive Red Plot Selection Buttons (Sleek Glassy Grey)
 btn_col1, btn_col2, btn_col3, btn_col4, btn_col5 = st.columns([1.2, 1.2, 1.2, 1.2, 1.0])
 with btn_col1:
     if st.button("Inspect KH-102/B\n(Score 0.2450)", key="sel_red_102b", use_container_width=True):
