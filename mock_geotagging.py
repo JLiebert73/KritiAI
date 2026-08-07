@@ -47,22 +47,16 @@ def render_geotagging_page():
                 else:
                     img_path = "assets/doc_panchayat.jpg"
                 
-                st.image(img_path, use_container_width=True, caption=doc_type)
-            
                 if st.button("Extract Entities via VLM", type="primary", use_container_width=True):
                     st.session_state.doc_extracted = True
+                
+                st.image(img_path, use_container_width=True, caption=doc_type)
     
         with terminal_col:
-            with st.container(border=True):
-                st.markdown("<b style='color:#8daeff;'>VLM Extraction Engine (KritiAI Terminal)</b>", unsafe_allow_html=True)
-            
-                if not st.session_state.doc_extracted:
-                    st.markdown("""
-                    <div style="background-color: #0c0e15; color: #6c757d; padding: 15px; font-family: 'Courier New', Courier, monospace; border-radius: 4px; font-size: 0.8rem; height: 350px; border: 1px solid #1a1c23; display: flex; align-items: center; justify-content: center;">
-                        Waiting for document ingestion...
-                    </div>
-                    """, unsafe_allow_html=True)
-                else:
+            if st.session_state.doc_extracted:
+                with st.container(border=True):
+                    st.markdown("<b style='color:#8daeff;'>VLM Extraction Engine (KritiAI Terminal)</b>", unsafe_allow_html=True)
+                    
                     if "Degraded" in doc_type:
                         st.markdown("""
                         <div style="background-color: #0c0e15; color: #4af626; padding: 15px; font-family: 'Courier New', Courier, monospace; border-radius: 4px; font-size: 0.8rem; height: 350px; overflow-y: auto; border: 1px solid #1a1c23;">
