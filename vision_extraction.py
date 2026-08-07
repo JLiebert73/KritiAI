@@ -91,18 +91,17 @@ def extract_field_boundaries(image_rgb):
         if area > 100 and area < 25000: # Typical field size bounds for Zoom 16
             valid_fields_count += 1
             
-            # Smooth the polygon and guarantee closure using Convex Hull
+            # Smooth the polygon (simplify the geometry into a clean vector)
             epsilon = 0.005 * cv2.arcLength(contour, True)
             approx = cv2.approxPolyDP(contour, epsilon, True)
-            hull = cv2.convexHull(approx)
             
-            valid_contours.append(hull)
+            valid_contours.append(approx)
             
             # Draw highly visible AI mask polygon outline (Bright Cyan/Green)
-            cv2.drawContours(overlay, [hull], -1, (42, 246, 178), 2)
+            cv2.drawContours(overlay, [approx], -1, (42, 246, 178), 2)
             # Add a faint fill overlay for the polygon interior
             fill_overlay = overlay.copy()
-            cv2.drawContours(fill_overlay, [hull], -1, (42, 246, 178), cv2.FILLED)
+            cv2.drawContours(fill_overlay, [approx], -1, (42, 246, 178), cv2.FILLED)
             cv2.addWeighted(fill_overlay, 0.2, overlay, 0.8, 0, overlay)
 
     # Convert the binary edge mask to RGB so Streamlit can display it
