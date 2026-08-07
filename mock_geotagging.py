@@ -26,7 +26,7 @@ def render_geotagging_page():
         if "doc_extracted" not in st.session_state:
             st.session_state.doc_extracted = False
     
-        doc_col, terminal_col = st.columns([1, 1.2])
+        doc_col, attn_col, terminal_col = st.columns([1, 1.2, 1.2])
     
         with doc_col:
             with st.container(border=True):
@@ -50,7 +50,12 @@ def render_geotagging_page():
                 if st.button("Extract Entities via VLM", type="primary", use_container_width=True):
                     st.session_state.doc_extracted = True
                 
-                if st.session_state.doc_extracted:
+                st.image(img_path, use_container_width=True, caption="Original Document")
+        
+        with attn_col:
+            if st.session_state.doc_extracted:
+                with st.container(border=True):
+                    st.markdown("<b style='color:#ffcc00;'>VLM Attention Map</b>", unsafe_allow_html=True)
                     from PIL import Image
                     img = Image.open(img_path)
                     w, h = img.size
@@ -60,28 +65,39 @@ def render_geotagging_page():
                     
                     if "Degraded" in doc_type:
                         boxes = [
-                            {"name": "Landlord: R. Sharma (KH-115/P)", "coords": [0.15*w, 0.2*h, 0.85*w, 0.35*h], "color": "rgba(255, 135, 135, 0.5)", "border": "red"},
-                            {"name": "Lessee: Bipul Das", "coords": [0.2*w, 0.4*h, 0.8*w, 0.55*h], "color": "rgba(99, 230, 190, 0.5)", "border": "green"},
-                            {"name": "Anchor: Gandhi Basti Road", "coords": [0.1*w, 0.65*h, 0.9*w, 0.8*h], "color": "rgba(255, 204, 0, 0.5)", "border": "gold"}
+                            {"name": "Landlord: R. Sharma (KH-115/P)", "coords": [0.15*w, 0.2*h, 0.85*w, 0.35*h], "color": "rgba(255, 135, 135, 0.4)", "border": "red", "text_pos": [0.5*w, 0.27*h]},
+                            {"name": "Lessee: Bipul Das", "coords": [0.2*w, 0.4*h, 0.8*w, 0.55*h], "color": "rgba(99, 230, 190, 0.4)", "border": "green", "text_pos": [0.5*w, 0.47*h]},
+                            {"name": "Anchor: Gandhi Basti Road", "coords": [0.1*w, 0.65*h, 0.9*w, 0.8*h], "color": "rgba(255, 204, 0, 0.4)", "border": "gold", "text_pos": [0.5*w, 0.72*h]}
                         ]
                     else:
                         boxes = [
-                            {"name": "Govt Trust Land", "coords": [0.15*w, 0.15*h, 0.85*w, 0.3*h], "color": "rgba(255, 135, 135, 0.5)", "border": "red"},
-                            {"name": "Applicant: Dipankar Saikia", "coords": [0.2*w, 0.45*h, 0.8*w, 0.6*h], "color": "rgba(99, 230, 190, 0.5)", "border": "green"},
-                            {"name": "Claim: 3 Bighas", "coords": [0.25*w, 0.7*h, 0.75*w, 0.85*h], "color": "rgba(255, 204, 0, 0.5)", "border": "gold"}
+                            {"name": "Govt Trust Land", "coords": [0.15*w, 0.15*h, 0.85*w, 0.3*h], "color": "rgba(255, 135, 135, 0.4)", "border": "red", "text_pos": [0.5*w, 0.22*h]},
+                            {"name": "Applicant: Dipankar Saikia", "coords": [0.2*w, 0.45*h, 0.8*w, 0.6*h], "color": "rgba(99, 230, 190, 0.4)", "border": "green", "text_pos": [0.5*w, 0.52*h]},
+                            {"name": "Claim: 3 Bighas", "coords": [0.25*w, 0.7*h, 0.75*w, 0.85*h], "color": "rgba(255, 204, 0, 0.4)", "border": "gold", "text_pos": [0.5*w, 0.77*h]}
                         ]
                         
                     for box in boxes:
                         x0, y0, x1, y1 = box["coords"]
+                        
+                        # Draw filled box
                         fig_vlm.add_trace(go.Scatter(
                             x=[x0, x1, x1, x0, x0],
                             y=[y0, y0, y1, y1, y0],
                             fill="toself",
                             fillcolor=box["color"],
                             line=dict(color=box["border"], width=3),
-                            hoverinfo="text",
-                            text=box["name"],
-                            name="Extraction",
+                            hoverinfo="skip",
+                            showlegend=False
+                        ))
+                        
+                        # Add permanent text
+                        fig_vlm.add_trace(go.Scatter(
+                            x=[box["text_pos"][0]],
+                            y=[box["text_pos"][1]],
+                            mode="text",
+                            text=[box["name"]],
+                            textfont=dict(color="white", size=14, family="Courier New"),
+                            hoverinfo="skip",
                             showlegend=False
                         ))
                         
@@ -90,12 +106,9 @@ def render_geotagging_page():
                         xaxis=dict(visible=False, range=[0, w]),
                         yaxis=dict(visible=False, range=[h, 0]),
                         plot_bgcolor="rgba(0,0,0,0)",
-                        paper_bgcolor="rgba(0,0,0,0)",
-                        hovermode="closest"
+                        paper_bgcolor="rgba(0,0,0,0)"
                     )
                     st.plotly_chart(fig_vlm, use_container_width=True, config={'displayModeBar': False})
-                else:
-                    st.image(img_path, use_container_width=True, caption=doc_type)
     
         with terminal_col:
             if st.session_state.doc_extracted:
