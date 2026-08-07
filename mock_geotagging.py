@@ -253,7 +253,7 @@ def render_geotagging_page():
         target_lat, target_lon = 26.2343, 91.5644
         
         # Run our vision extraction pipeline
-        raw_img = fetch_arcgis_satellite_imagery(target_lat, target_lon, zoom=16)
+        raw_img = fetch_arcgis_satellite_imagery(target_lat, target_lon, zoom=17)
         binary_mask, skeleton_mask, overlay_img, field_count, valid_contours = extract_field_boundaries(raw_img)
         
         c1, c2, c3, c4 = st.columns(4)
@@ -302,10 +302,12 @@ def render_geotagging_page():
                 fig.add_trace(go.Scatter(
                     x=x, y=y,
                     fill="toself",
-                    fillcolor="rgba(42, 246, 178, 0.35)",
+                    fillcolor="rgba(0, 0, 0, 0)", # Completely transparent fill
                     line=dict(color="rgb(42, 246, 178)", width=2),
+                    hoveron="fills", # Trigger hover when mouse is inside the transparent polygon
                     hoverinfo="text",
                     text=f"<b>Geotagged Owner:</b> {owner}<br><b>Registry ID:</b> {khasra}<br><b>Area:</b> {area_sqm} sqm",
+                    hoverlabel=dict(bgcolor="rgba(42, 246, 178, 0.9)", font=dict(color="black")),
                     showlegend=False
                 ))
             
