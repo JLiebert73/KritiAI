@@ -27,68 +27,72 @@ def render_hub_page():
             st.query_params["page"] = "geotagging"
             st.rerun()
             
-    # Center Hub (Rotating Brain)
+    # Center Hub (Vector Space UMAP)
     with center_col:
-        # Generate a spherical/brain-like 3D scatter
         np.random.seed(42)
-        n_nodes = 800
-        phi = np.random.uniform(0, 2 * np.pi, n_nodes)
-        costheta = np.random.uniform(-1, 1, n_nodes)
-        u = np.random.uniform(0, 1, n_nodes)
-        theta = np.arccos(costheta)
-        r = 1.0 * np.cbrt(u)
+        n_points = 500
         
-        # Squeeze slightly into an oval shape to resemble a brain
-        x = r * np.sin(theta) * np.cos(phi) * 0.8
-        y = r * np.sin(theta) * np.sin(phi) * 1.2
-        z = r * np.cos(theta) * 0.9
+        # Create three distinct clusters
+        cluster_1 = np.random.normal(loc=[2, 2, 2], scale=0.5, size=(n_points // 3, 3))
+        cluster_2 = np.random.normal(loc=[-2, -2, -2], scale=0.5, size=(n_points // 3, 3))
+        cluster_3 = np.random.normal(loc=[3, -3, 1], scale=0.5, size=(n_points - 2 * (n_points // 3), 3))
         
-        # Color gradient based on depth
-        colors = z
+        all_points = np.vstack([cluster_1, cluster_2, cluster_3])
         
-        fig = go.Figure(data=[go.Scatter3d(
-            x=x, y=y, z=z,
+        fig = go.Figure()
+        
+        # Background noise
+        fig.add_trace(go.Scatter3d(
+            x=np.random.uniform(-4, 4, 1000),
+            y=np.random.uniform(-4, 4, 1000),
+            z=np.random.uniform(-4, 4, 1000),
             mode='markers',
-            marker=dict(
-                size=3,
-                color=colors,
-                colorscale='electric',
-                opacity=0.8
-            ),
-            hoverinfo='none'
-        )])
+            marker=dict(size=2, color='rgba(255, 255, 255, 0.1)'),
+            hoverinfo='none',
+            showlegend=False
+        ))
         
-        # Add rotation animation using layout.scene.camera
-        # Streamlit doesn't support live python while loops modifying figures well,
-        # but we can set an initial camera angle, or just make it an interactive 3D plot
-        # that the user can spin manually, which still looks incredibly cool.
+        # Clusters
+        fig.add_trace(go.Scatter3d(
+            x=all_points[:, 0], y=all_points[:, 1], z=all_points[:, 2],
+            mode='markers',
+            marker=dict(size=4, color=all_points[:, 2], colorscale='electric', opacity=0.8),
+            text=[f"Embedded Vector #{i}" for i in range(len(all_points))],
+            hoverinfo='text',
+            showlegend=False
+        ))
+        
+        # Highlight a specific resolution
+        fig.add_trace(go.Scatter3d(
+            x=[2.1, 2.05, 2.15],
+            y=[2.1, 2.15, 2.05],
+            z=[2.1, 2.0, 2.2],
+            mode='markers+text',
+            marker=dict(size=8, color='#ffcc00', symbol='diamond'),
+            text=["'Bipul D.' (Panchayat)", "'Bipal Das' (Oral)", "KH-115/P (Satellite)"],
+            textposition="top center",
+            textfont=dict(color="white"),
+            name="Resolved Entity: UNREG-902"
+        ))
         
         fig.update_layout(
             margin=dict(l=0, r=0, b=0, t=0),
+            paper_bgcolor='rgba(0,0,0,0)',
+            plot_bgcolor='rgba(0,0,0,0)',
             scene=dict(
-                xaxis=dict(visible=False),
-                yaxis=dict(visible=False),
-                zaxis=dict(visible=False),
-                bgcolor='rgba(0,0,0,0)',
+                xaxis=dict(showbackground=False, showgrid=False, zeroline=False, showticklabels=False, title=''),
+                yaxis=dict(showbackground=False, showgrid=False, zeroline=False, showticklabels=False, title=''),
+                zaxis=dict(showbackground=False, showgrid=False, zeroline=False, showticklabels=False, title=''),
                 camera=dict(
                     eye=dict(x=1.5, y=1.5, z=0.5)
                 )
             ),
-            paper_bgcolor='rgba(0,0,0,0)',
-            plot_bgcolor='rgba(0,0,0,0)',
-            height=400,
+            height=450,
             showlegend=False
         )
         
         # Using a container to center it
         st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False})
-        
-        # The Vector Space Button directly below the brain
-        st.markdown("<div style='text-align:center;'>", unsafe_allow_html=True)
-        if st.button("🌌 Enter Vector Space", type="primary", use_container_width=True):
-            st.query_params["page"] = "vector_space"
-            st.rerun()
-        st.markdown("</div>", unsafe_allow_html=True)
 
     # Right Spokes
     with right_col:
