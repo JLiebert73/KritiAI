@@ -17,6 +17,7 @@ from kisan_audit_engine import execute_kisan_audit_pipeline
 from architecture_matrix import render_5x5_architecture_matrix
 from mock_pmfby import render_pmfby_inundate_page
 from mock_urvarak import render_urvarak_sparsity_page
+from mock_geotagging import render_geotagging_page
 
 # Initialize database
 init_and_seed_registry()
@@ -231,7 +232,8 @@ if current_page == "login" or not st.session_state["authenticated"]:
             "Village Extension / Nodal Officer (VNO) — Mobile Field Verification",
             "State Disaster Relief Auditor — PMFBY-Inundate Paddy Loss Verification",
             "District Fertilizer Logistics Officer — Urvarak-Sparsity Allocation Planner",
-            "Executive / Jury Evaluator — 5x5 Architecture Matrix Inspection"
+            "Executive / Jury Evaluator — 5x5 Architecture Matrix Inspection",
+            "Chief Data Officer (CDO) — Knowledge Graph & Geotagging"
         ]
         selected_role = st.selectbox("Select Role", role_options, label_visibility="collapsed")
         
@@ -249,13 +251,15 @@ if current_page == "login" or not st.session_state["authenticated"]:
                 st.query_params["page"] = "urvarak"
             elif "5x5 Architecture" in selected_role:
                 st.query_params["page"] = "learn"
+            elif "Knowledge Graph" in selected_role:
+                st.query_params["page"] = "geotagging"
             else:
                 st.query_params["page"] = "dashboard"
             st.rerun()
             
         st.markdown("""<div class="login-divider">or quick access with role badge</div>""", unsafe_allow_html=True)
         
-        qc1, qc2, qc3 = st.columns(3)
+        qc1, qc2, qc3, qc4 = st.columns(4)
         with qc1:
             if st.button("DAO Portal", key="qa_dao", use_container_width=True):
                 st.session_state["authenticated"] = True
@@ -274,6 +278,12 @@ if current_page == "login" or not st.session_state["authenticated"]:
                 st.session_state["active_role"] = "Sub-Divisional Agriculture Officer (SDAO)"
                 st.query_params["page"] = "dashboard"
                 st.rerun()
+        with qc4:
+            if st.button("CDO Graph", key="qa_cdo", use_container_width=True):
+                st.session_state["authenticated"] = True
+                st.session_state["active_role"] = "Chief Data Officer (CDO)"
+                st.query_params["page"] = "geotagging"
+                st.rerun()
                 
     st.stop()
 
@@ -288,7 +298,7 @@ with top_col_logo:
     st.markdown(f"""<div><span class="harvey-logo">KritiAI</span><span style="font-size:0.78rem;background:rgba(255,255,255,0.08);color:#d0d0d0;padding:3px 8px;border-radius:4px;border:1px solid rgba(255,255,255,0.2);margin-left:10px;font-weight:600;">PORTAL</span><div class="harvey-subtitle">Kamrup | Role: {st.session_state.get('active_role', 'DAO')}</div></div>""", unsafe_allow_html=True)
 
 with top_col_routes:
-    r1, r2, r3, r4, r5, r6 = st.columns([1.3, 1.15, 1.25, 1.25, 1.15, 0.9])
+    r1, r2, r3, r4, r5, r6, r7 = st.columns([1.2, 1.25, 1.15, 1.2, 1.15, 1.15, 0.9])
     with r1:
         if st.button("PM-KISAN Audit", key="nav_dash", use_container_width=True):
             st.query_params["page"] = "dashboard"
@@ -310,6 +320,10 @@ with top_col_routes:
             st.query_params["page"] = "learn"
             st.rerun()
     with r6:
+        if st.button("ID Graph", key="nav_geotag", use_container_width=True):
+            st.query_params["page"] = "geotagging"
+            st.rerun()
+    with r7:
         if st.button("Switch Role", key="nav_logout", use_container_width=True):
             st.session_state["authenticated"] = False
             st.query_params["page"] = "login"
@@ -323,6 +337,9 @@ st.markdown("<div style='padding: 0 40px;'>", unsafe_allow_html=True)
 # ----------------- PAGE ROUTE SWITCHER -----------------
 if current_page == "pmfby":
     render_pmfby_inundate_page()
+    st.stop()
+elif current_page == "geotagging":
+    render_geotagging_page()
     st.stop()
 elif current_page == "urvarak":
     render_urvarak_sparsity_page()
@@ -656,3 +673,23 @@ else:
         st.caption("Click any highlighted red plot directly on the Gandhi Mandap map above or click the quick-access selection buttons to reveal complete diagnostic logs and statutory decision controls right underneath.")
 
 st.markdown("</div>", unsafe_allow_html=True)
+
+# Triggering Streamlit Hot-Reload
+
+# Triggering Streamlit Hot-Reload for sparse graph
+
+# Triggering Streamlit Hot-Reload for purely focused graph
+
+# Triggering Streamlit Hot-Reload for more specific examples
+
+# Triggering Streamlit Hot-Reload for live vision model
+
+# Triggering Streamlit Hot-Reload for login page routes
+
+# Triggering Streamlit Hot-Reload for Skeletonization UI
+
+# Triggering Streamlit Hot-Reload for interactive plotly overlay
+
+# Triggering Streamlit Hot-Reload for smooth hulls
+
+# Triggering Streamlit Hot-Reload for np fix

@@ -1,0 +1,19 @@
+We are solving a massive administrative bottleneck caused by blind random sampling in government agricultural audits.
+Under the PM-KISAN scheme, the government provides direct cash transfers to landholding farmers
+. To prevent fraud—such as payments going to individuals whose land is actually fallow or converted to non-agricultural use—Para 10.5 of the PM-KISAN Operational Guidelines legally mandates that states must physically verify 5% of all beneficiaries every year
+.
+Currently, the government selects this 5% completely at random
+. This means state field workers (Village Nodal Officers) waste thousands of hours physically driving to inspect perfectly valid farms, while actual fraudsters in the remaining 95% go undetected. The PM-KISAN database has grown so large that this manual, random process has broken down; states are severely backlogged and are still struggling to finish the physical verifications for the 2020-2021 and 2021-2022 financial years
+.
+To identify and validate this exact 5% problem, we relied directly on the following official government resources:
+The PM-KISAN Operational Guidelines (Para 10.5): The foundational legal text that explicitly stipulates the mandate for State and UT governments to ensure physical checking of around 5% of beneficiaries
+.
+The Official Standard Operating Procedure (SoP) for Physical Verification (FY 2022-24): The Ministry of Agriculture's own internal documentation detailing how this 5% random sample is currently assigned to Village Nodal Officers (VNOs) via a mobile app, and acknowledging the severe deadline backlogs states are facing
+.
+Comptroller and Auditor General (CAG) Audit Reports: Official audits which have repeatedly exposed widespread disbursement bottlenecks and massive subsidy leakages to ineligible beneficiaries, proving that the current manual verification system is failing
+.
+Ministry of Agriculture Directives: Official letters issued to Chief Secretaries and State Nodal Officers reiterating the requirement to conduct these random surveys within strict 45-day timelines—timelines they are currently failing to meet
+.
+
+
+The Proof: According to official audit findings from the Comptroller and Auditor General (CAG) of India, a substantial gap exists between registered beneficiaries and active field verification. Public records highlight widespread disbursement bottlenecks under PM-KISAN, primarily due to unverified land records, faulty or delayed manual land-seeding, and a severe administrative backlog in processing complex digital-to-physical land registries.
