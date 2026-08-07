@@ -243,9 +243,10 @@ def render_geotagging_page():
     st.markdown("<br>", unsafe_allow_html=True)
 
     # -------------------------------------------------------------------------
-    # SECTION 3: LIVE VISION MODEL POLYGON EXTRACTION
     # -------------------------------------------------------------------------
-    st.markdown("#### 3. Live Cross-Modal Vision Segmentation (Physical Geotagging)")
+    # SECTION 3: SEMANTIC LAND COVER CLASSIFICATION
+    # -------------------------------------------------------------------------
+    st.markdown("#### 3. Semantic Land Cover Classification")
     st.markdown("<p style='color: #a0a0a0; font-size: 0.9rem;'>Now that the identity is resolved, the system dynamically queries the ArcGIS World Imagery API for the Khatauni target coordinate and runs our local vision model pipeline to physically extract the sub-lease parcel boundaries.</p>", unsafe_allow_html=True)
     
     with st.spinner("Initializing ArcGIS Imagery and Vision Extraction Engine..."):
@@ -282,33 +283,35 @@ def render_geotagging_page():
             # Store generated data to display in a table later
             extracted_registry = []
             
-            for contour in valid_contours:
+            for item in valid_contours:
+                contour = item['geometry']
+                lc_class = item['class']
+                lc_color = item['color']
+                r, g, b = lc_color
+                
                 x = contour[:, 0, 0]
                 y = contour[:, 0, 1]
                 # Close the polygon
                 x = np.append(x, x[0])
                 y = np.append(y, y[0])
                 
-                owner = random.choice(mock_owners)
-                khasra = f"KH-{random.randint(100, 999)}/P"
                 area_sqm = int(cv2.contourArea(contour) * 1.5) # Mock conversion
                 
                 extracted_registry.append({
-                    "Registry ID": khasra,
-                    "Geotagged Owner": owner,
+                    "Land Cover Class": lc_class,
                     "Estimated Area (sqm)": area_sqm,
-                    "Status": "Matched" if owner not in ["Unknown Tenant", "State Trust"] else "Unregistered"
+                    "RGB Color": f"rgb({r}, {g}, {b})"
                 })
                 
                 fig.add_trace(go.Scatter(
                     x=x, y=y,
                     fill="toself",
-                    fillcolor="rgba(0, 0, 0, 0)", # Completely transparent fill
-                    line=dict(color="rgb(42, 246, 178)", width=2),
-                    hoveron="fills", # Trigger hover when mouse is inside the transparent polygon
+                    fillcolor=f"rgba({r}, {g}, {b}, 0.45)", # Semi-transparent semantic fill
+                    line=dict(color=f"rgb({r}, {g}, {b})", width=2),
+                    hoveron="fills",
                     hoverinfo="text",
-                    text=f"<b>Geotagged Owner:</b> {owner}<br><b>Registry ID:</b> {khasra}<br><b>Area:</b> {area_sqm} sqm",
-                    hoverlabel=dict(bgcolor="rgba(42, 246, 178, 0.9)", font=dict(color="black")),
+                    text=f"<b>Class:</b> {lc_class}<br><b>Area:</b> {area_sqm} sqm",
+                    hoverlabel=dict(bgcolor=f"rgba({r}, {g}, {b}, 0.9)", font=dict(color="black")),
                     showlegend=False
                 ))
             

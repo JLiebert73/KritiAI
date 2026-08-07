@@ -21,12 +21,28 @@ def prune_skeleton(skel, num_iter=30):
                        [1, 1, 1]])
     for _ in range(num_iter):
         neighbor_count = convolve(skel.astype(int), kernel, mode='constant', cval=0)
-        # Endpoints are pixels that are True (10) and have exactly 1 neighbor (1) -> 11
         endpoints = (neighbor_count == 11)
         if not np.any(endpoints):
             break
         skel[endpoints] = False
     return skel
+
+def classify_land_cover(mean_color):
+    """Simple heuristic land cover classification based on the mean RGB color of a field."""
+    r, g, b = mean_color[:3]
+    
+    # Vegetation: Green channel is significantly higher
+    if g > r + 5 and g > b + 5:
+        return "Crop Land (Vegetation)", (42, 246, 178) # Bright Green
+    # Water: Blue dominant and generally dark
+    elif b > r and b > g and (r + g + b) < 350:
+        return "Water Body", (50, 150, 255) # Blue
+    # Built-up / Urban: Desaturated, high overall brightness
+    elif abs(r-g) < 25 and abs(r-b) < 25 and r > 100:
+        return "Built-up Area", (200, 200, 200) # Gray
+    # Barren / Fallow: Brownish/Yellow (Red and Green high, Blue low)
+    else:
+        return "Barren / Fallow Land", (205, 133, 63) # Brown
 
 def fetch_arcgis_satellite_imagery(lat, lon, zoom=16):
     """Fetches a live high-res satellite tile from the ArcGIS REST API"""
@@ -86,6 +102,9 @@ def extract_field_boundaries(image_rgb):
     valid_fields_count = 0
     valid_contours = []
     
+    # Base mask for computing mean color of each polygon
+    base_mask = np.zeros(image_rgb.shape[:2], dtype=np.uint8)
+    
     for contour in contours:
         area = cv2.contourArea(contour)
         if area > 100 and area < 25000: # Typical field size bounds for Zoom 16
@@ -95,14 +114,25 @@ def extract_field_boundaries(image_rgb):
             epsilon = 0.005 * cv2.arcLength(contour, True)
             approx = cv2.approxPolyDP(contour, epsilon, True)
             
-            valid_contours.append(approx)
+            # Compute Mean Color to classify land cover
+            mask = base_mask.copy()
+            cv2.drawContours(mask, [approx], -1, 255, -1)
+            mean_color = cv2.mean(image_rgb, mask=mask)
             
-            # Draw highly visible AI mask polygon outline (Bright Cyan/Green)
-            cv2.drawContours(overlay, [approx], -1, (42, 246, 178), 2)
-            # Add a faint fill overlay for the polygon interior
+            lc_class, lc_color = classify_land_cover(mean_color)
+            
+            valid_contours.append({
+                "geometry": approx,
+                "class": lc_class,
+                "color": lc_color
+            })
+            
+            # Draw AI mask polygon outline with semantic color
+            cv2.drawContours(overlay, [approx], -1, lc_color, 2)
+            # Add a semantic fill overlay for the polygon interior
             fill_overlay = overlay.copy()
-            cv2.drawContours(fill_overlay, [approx], -1, (42, 246, 178), cv2.FILLED)
-            cv2.addWeighted(fill_overlay, 0.2, overlay, 0.8, 0, overlay)
+            cv2.drawContours(fill_overlay, [approx], -1, lc_color, cv2.FILLED)
+            cv2.addWeighted(fill_overlay, 0.4, overlay, 0.6, 0, overlay)
 
     # Convert the binary edge mask to RGB so Streamlit can display it
     mask_rgb = cv2.cvtColor(closed, cv2.COLOR_GRAY2RGB)
