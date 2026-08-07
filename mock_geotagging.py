@@ -169,6 +169,8 @@ def render_land_cover_page():
     with st.spinner("Initializing ArcGIS Imagery and Vision Extraction Engine..."):
     
         # Fetch and process the real tile at zoom 16 to get a high density of fields
+        st.session_state.lat = lat
+        st.session_state.lon = lon
         raw_img = fetch_arcgis_satellite_imagery(lat, lon, zoom=16)
         binary_mask, skeleton_mask, overlay_img, field_count, valid_contours = extract_field_boundaries(raw_img, lat, lon)
     
@@ -245,6 +247,10 @@ def render_land_cover_page():
         
             st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False})
             st.caption(f"Hover to view owner details for {field_count} Parcels")
+            
+            # Save to session state for the Geotagging Map page
+            st.session_state.extracted_registry = extracted_registry
+            st.session_state.valid_contours = valid_contours
 
     st.markdown("<br>", unsafe_allow_html=True)
 
@@ -256,6 +262,9 @@ def render_geotagging_map_page():
     # -------------------------------------------------------------------------
     st.markdown("#### Live Extracted Cadastral Registry")
     st.markdown("<p style='color: #a0a0a0; font-size: 0.9rem;'>The following database registry was generated in real-time purely from the vision model's boundary extraction and cross-referenced against the Knowledge Graph.</p>", unsafe_allow_html=True)
+
+    extracted_registry = st.session_state.get('extracted_registry', [])
+    valid_contours = st.session_state.get('valid_contours', [])
 
     if len(extracted_registry) > 0:
         df_registry = pd.DataFrame(extracted_registry)
@@ -269,10 +278,11 @@ def render_geotagging_map_page():
     st.markdown("#### 4. The Geotagged Spatial Registry")
     viz_data = []
 
-    if 'valid_contours' in locals() and valid_contours:
+    if len(valid_contours) > 0:
         st.markdown("<p style='color: #a0a0a0; font-size: 0.9rem;'>The PyDeck visualization below demonstrates the real-time AI Land Cover classification superimposed directly onto the global spatial registry.</p>", unsafe_allow_html=True)
-        view_lat = lat
-        view_lon = lon
+        # We need lat and lon from session state or default
+        view_lat = st.session_state.get('lat', 30.2520)
+        view_lon = st.session_state.get('lon', 74.9450)
         for i, item in enumerate(valid_contours):
             geo_polygon = item['geo_polygon']
             lc_class = item['class']
