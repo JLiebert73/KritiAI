@@ -50,7 +50,52 @@ def render_geotagging_page():
                 if st.button("Extract Entities via VLM", type="primary", use_container_width=True):
                     st.session_state.doc_extracted = True
                 
-                st.image(img_path, use_container_width=True, caption=doc_type)
+                if st.session_state.doc_extracted:
+                    from PIL import Image
+                    img = Image.open(img_path)
+                    w, h = img.size
+                    
+                    fig_vlm = go.Figure()
+                    fig_vlm.add_trace(go.Image(z=np.array(img)))
+                    
+                    if "Degraded" in doc_type:
+                        boxes = [
+                            {"name": "Landlord: R. Sharma (KH-115/P)", "coords": [0.15*w, 0.2*h, 0.85*w, 0.35*h], "color": "rgba(255, 135, 135, 0.5)", "border": "red"},
+                            {"name": "Lessee: Bipul Das", "coords": [0.2*w, 0.4*h, 0.8*w, 0.55*h], "color": "rgba(99, 230, 190, 0.5)", "border": "green"},
+                            {"name": "Anchor: Gandhi Basti Road", "coords": [0.1*w, 0.65*h, 0.9*w, 0.8*h], "color": "rgba(255, 204, 0, 0.5)", "border": "gold"}
+                        ]
+                    else:
+                        boxes = [
+                            {"name": "Govt Trust Land", "coords": [0.15*w, 0.15*h, 0.85*w, 0.3*h], "color": "rgba(255, 135, 135, 0.5)", "border": "red"},
+                            {"name": "Applicant: Dipankar Saikia", "coords": [0.2*w, 0.45*h, 0.8*w, 0.6*h], "color": "rgba(99, 230, 190, 0.5)", "border": "green"},
+                            {"name": "Claim: 3 Bighas", "coords": [0.25*w, 0.7*h, 0.75*w, 0.85*h], "color": "rgba(255, 204, 0, 0.5)", "border": "gold"}
+                        ]
+                        
+                    for box in boxes:
+                        x0, y0, x1, y1 = box["coords"]
+                        fig_vlm.add_trace(go.Scatter(
+                            x=[x0, x1, x1, x0, x0],
+                            y=[y0, y0, y1, y1, y0],
+                            fill="toself",
+                            fillcolor=box["color"],
+                            line=dict(color=box["border"], width=3),
+                            hoverinfo="text",
+                            text=box["name"],
+                            name="Extraction",
+                            showlegend=False
+                        ))
+                        
+                    fig_vlm.update_layout(
+                        margin=dict(l=0, r=0, b=0, t=0),
+                        xaxis=dict(visible=False, range=[0, w]),
+                        yaxis=dict(visible=False, range=[h, 0]),
+                        plot_bgcolor="rgba(0,0,0,0)",
+                        paper_bgcolor="rgba(0,0,0,0)",
+                        hovermode="closest"
+                    )
+                    st.plotly_chart(fig_vlm, use_container_width=True, config={'displayModeBar': False})
+                else:
+                    st.image(img_path, use_container_width=True, caption=doc_type)
     
         with terminal_col:
             if st.session_state.doc_extracted:
