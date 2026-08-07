@@ -21,11 +21,7 @@ def render_hub_page():
         if st.button("🧬 Identity Graph\n(Link Attack)", use_container_width=True, key="hub_id"):
             st.query_params["page"] = "id_graph"
             st.rerun()
-            
-        st.markdown("<br>", unsafe_allow_html=True)
-        if st.button("📜 Claim Generation\n(PDF Export)", use_container_width=True, key="hub_claim"):
-            st.query_params["page"] = "claim_gen"
-            st.rerun()
+
             
     # Center Hub (Vector Space UMAP)
     with center_col:
