@@ -17,7 +17,8 @@ from kisan_audit_engine import execute_kisan_audit_pipeline
 from architecture_matrix import render_5x5_architecture_matrix
 from mock_pmfby import render_pmfby_inundate_page
 from mock_urvarak import render_urvarak_sparsity_page
-from mock_geotagging import render_geotagging_page
+from hub_page import render_hub_page
+from mock_geotagging import render_doc_intel_page, render_id_graph_page, render_vector_space_page, render_land_cover_page, render_geotagging_map_page
 
 # Initialize database
 init_and_seed_registry()
@@ -252,7 +253,7 @@ if current_page == "login" or not st.session_state["authenticated"]:
             elif "5x5 Architecture" in selected_role:
                 st.query_params["page"] = "learn"
             elif "Knowledge Graph" in selected_role:
-                st.query_params["page"] = "geotagging"
+                st.query_params["page"] = "hub"
             else:
                 st.query_params["page"] = "dashboard"
             st.rerun()
@@ -279,10 +280,10 @@ if current_page == "login" or not st.session_state["authenticated"]:
                 st.query_params["page"] = "dashboard"
                 st.rerun()
         with qc4:
-            if st.button("CDO Graph", key="qa_cdo", use_container_width=True):
+            if st.button("CDO Hub", key="qa_cdo", use_container_width=True):
                 st.session_state["authenticated"] = True
                 st.session_state["active_role"] = "Chief Data Officer (CDO)"
-                st.query_params["page"] = "geotagging"
+                st.query_params["page"] = "hub"
                 st.rerun()
                 
     st.stop()
@@ -320,8 +321,8 @@ with top_col_routes:
             st.query_params["page"] = "learn"
             st.rerun()
     with r6:
-        if st.button("ID Graph", key="nav_geotag", use_container_width=True):
-            st.query_params["page"] = "geotagging"
+        if st.button("Core Hub", key="nav_hub", use_container_width=True):
+            st.query_params["page"] = "hub"
             st.rerun()
     with r7:
         if st.button("Switch Role", key="nav_logout", use_container_width=True):
@@ -338,8 +339,23 @@ st.markdown("<div style='padding: 0 40px;'>", unsafe_allow_html=True)
 if current_page == "pmfby":
     render_pmfby_inundate_page()
     st.stop()
+elif current_page == "hub":
+    render_hub_page()
+    st.stop()
+elif current_page == "doc_intel":
+    render_doc_intel_page()
+    st.stop()
+elif current_page == "id_graph":
+    render_id_graph_page()
+    st.stop()
+elif current_page == "vector_space":
+    render_vector_space_page()
+    st.stop()
+elif current_page == "land_cover":
+    render_land_cover_page()
+    st.stop()
 elif current_page == "geotagging":
-    render_geotagging_page()
+    render_geotagging_map_page()
     st.stop()
 elif current_page == "urvarak":
     render_urvarak_sparsity_page()
