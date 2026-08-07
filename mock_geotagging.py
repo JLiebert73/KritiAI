@@ -34,20 +34,23 @@ def render_geotagging_page():
                     "Degraded Local Panchayat Lease (Handwritten)", 
                     "Crumpled Village Panchayat Certificate"
                 ], horizontal=False)
-            
+                
+                if "doc_type_prev" not in st.session_state:
+                    st.session_state.doc_type_prev = doc_type
+
+                if st.session_state.doc_type_prev != doc_type:
+                    st.session_state.doc_extracted = False
+                    st.session_state.doc_type_prev = doc_type
+                
                 if "Degraded" in doc_type:
                     img_path = "assets/doc_lease.jpg"
-                    st.session_state.doc_extracted = False
                 else:
                     img_path = "assets/doc_panchayat.jpg"
-                    st.session_state.doc_extracted = False
                 
                 st.image(img_path, use_container_width=True, caption=doc_type)
             
                 if st.button("Extract Entities via VLM", type="primary", use_container_width=True):
-                    with st.spinner("Processing degraded document..."):
-                        time.sleep(1.5)
-                        st.session_state.doc_extracted = True
+                    st.session_state.doc_extracted = True
     
         with terminal_col:
             with st.container(border=True):
