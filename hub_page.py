@@ -23,8 +23,8 @@ def render_hub_page():
             st.rerun()
             
         st.markdown("<br>", unsafe_allow_html=True)
-        if st.button("🌍 Spatial Geotagging\n(Claim Projection)", use_container_width=True, key="hub_geo"):
-            st.query_params["page"] = "geotagging"
+        if st.button("📜 Claim Generation\n(PDF Export)", use_container_width=True, key="hub_claim"):
+            st.query_params["page"] = "claim_gen"
             st.rerun()
             
     # Center Hub (Vector Space UMAP)
@@ -97,7 +97,7 @@ def render_hub_page():
     # Right Spokes
     with right_col:
         st.markdown("<br><br>", unsafe_allow_html=True)
-        if st.button("🛰️ Semantic Land Cover\n(CV Pipeline)", use_container_width=True, key="hub_land"):
+        if st.button("🛰️ Spatial Geotagging\n(CV Pipeline)", use_container_width=True, key="hub_land"):
             st.query_params["page"] = "land_cover"
             st.rerun()
             

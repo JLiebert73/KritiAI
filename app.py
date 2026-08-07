@@ -345,6 +345,9 @@ elif current_page == "hub":
 elif current_page == "doc_intel":
     render_doc_intel_page()
     st.stop()
+elif current_page == "claim_gen":
+    st.info("Claim Generation Module (In Progress) - Renders the final certified PDF for the tenant farmer.")
+    st.stop()
 elif current_page == "id_graph":
     render_id_graph_page()
     st.stop()
