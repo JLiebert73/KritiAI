@@ -52,7 +52,7 @@ def render_hub_page():
             marker=dict(
                 size=3,
                 color=colors,
-                colorscale='Agal', # A nice glowing blue/purple scale if available, else Viridis
+                colorscale='electric',
                 opacity=0.8
             ),
             hoverinfo='none'
