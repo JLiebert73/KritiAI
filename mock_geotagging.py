@@ -18,39 +18,73 @@ def render_geotagging_page():
     # -------------------------------------------------------------------------
     st.markdown("#### 1. Real-Time Document Intelligence (OCR-to-Spatial Pipeline)")
     
+    # Initialize extraction state
+    if "doc_extracted" not in st.session_state:
+        st.session_state.doc_extracted = False
+    
     doc_col, terminal_col = st.columns([1, 1.2])
     
     with doc_col:
         with st.container(border=True):
-            st.markdown("<b style='color:#e0e0e0;'>Source Data:</b> `Degraded Local Panchayat Lease (Handwritten/Bilingual)`", unsafe_allow_html=True)
-            # Simulated messy document snippet
-            st.markdown("""
-            <div style="background-color: #dfd8c8; color: #3b3a36; padding: 20px; font-family: 'Courier New', Courier, monospace; border-radius: 4px; box-shadow: inset 0 0 10px rgba(0,0,0,0.5); font-style: italic; font-weight: bold; font-size: 0.9rem;">
-                <p>Date: 14/06/2023</p>
-                <p>Khatauni Reg: KH-115/P (Landlord: R. Sharma)</p>
-                <p style="text-decoration: underline;">Sub-lease to: Bipul Das (Oral Lessee)</p>
-                <p>Boundary note: 2 bighas South of Gandhi Basti road.</p>
-                <p>Crop: Kharif Paddy, Rainfed.</p>
-                <p style="opacity: 0.6; font-size: 0.7rem;">(Panchayat seal barely legible... signature scrawled)</p>
-            </div>
-            """, unsafe_allow_html=True)
+            doc_type = st.radio("Select Source Data to Ingest", [
+                "Degraded Local Panchayat Lease (Handwritten)", 
+                "Crumpled Village Panchayat Certificate"
+            ], horizontal=False)
+            
+            if "Degraded" in doc_type:
+                img_path = "assets/doc_lease.jpg"
+                st.session_state.doc_extracted = False
+            else:
+                img_path = "assets/doc_panchayat.jpg"
+                st.session_state.doc_extracted = False
+                
+            st.image(img_path, use_container_width=True, caption=doc_type)
+            
+            if st.button("Extract Entities via VLM", type="primary", use_container_width=True):
+                with st.spinner("Processing degraded document..."):
+                    time.sleep(1.5)
+                    st.session_state.doc_extracted = True
     
     with terminal_col:
         with st.container(border=True):
             st.markdown("<b style='color:#8daeff;'>VLM Extraction Engine (KritiAI Terminal)</b>", unsafe_allow_html=True)
-            st.markdown("""
-            <div style="background-color: #0c0e15; color: #4af626; padding: 15px; font-family: 'Courier New', Courier, monospace; border-radius: 4px; font-size: 0.8rem; height: 180px; overflow-y: auto; border: 1px solid #1a1c23;">
-                > [SYSTEM] Initializing Layout-Aware Vision-Language Model...<br>
-                > [INGEST] Scanning Panchayat Document #98221...<br>
-                > [OCR] Detected Bilingual Script (English/Assamese)...<br>
-                > [EXTRACT] Landlord Target: R. Sharma (Resolved to KH-115/P)<br>
-                > [EXTRACT] <b>Unregistered Entity:</b> Bipul Das (Role: Lessee)<br>
-                > [EXTRACT] Spatial Anchor: "South of Gandhi Basti road"<br>
-                > [EXTRACT] Temporal Anchor: "Kharif Paddy"<br>
-                > [ALIGN] Vectorizing extracted semantic text for Knowledge Graph projection...<br>
-                > <span style="color:#ffcc00;">[SUCCESS] Unregistered Farmer Node Created (ID: UNREG-902).</span>
-            </div>
-            """, unsafe_allow_html=True)
+            
+            if not st.session_state.doc_extracted:
+                st.markdown("""
+                <div style="background-color: #0c0e15; color: #6c757d; padding: 15px; font-family: 'Courier New', Courier, monospace; border-radius: 4px; font-size: 0.8rem; height: 350px; border: 1px solid #1a1c23; display: flex; align-items: center; justify-content: center;">
+                    Waiting for document ingestion...
+                </div>
+                """, unsafe_allow_html=True)
+            else:
+                if "Degraded" in doc_type:
+                    st.markdown("""
+                    <div style="background-color: #0c0e15; color: #4af626; padding: 15px; font-family: 'Courier New', Courier, monospace; border-radius: 4px; font-size: 0.8rem; height: 350px; overflow-y: auto; border: 1px solid #1a1c23;">
+                        > [SYSTEM] Initializing Layout-Aware Vision-Language Model...<br>
+                        > [INGEST] Scanning Handwritten Lease Agreement...<br>
+                        > [OCR] Detected Bilingual Script (English/Assamese). Low contrast detected.<br>
+                        > [DENOISE] Enhancing contrast and removing water stains...<br>
+                        > [EXTRACT] <b>Landlord Target:</b> R. Sharma (Resolved to KH-115/P)<br>
+                        > [EXTRACT] <b>Unregistered Entity:</b> Bipul Das (Role: Lessee)<br>
+                        > [EXTRACT] <b>Spatial Anchor:</b> "South of Gandhi Basti road"<br>
+                        > [EXTRACT] <b>Temporal Anchor:</b> "Kharif Paddy"<br>
+                        > [ALIGN] Vectorizing extracted semantic text for Knowledge Graph projection...<br>
+                        > <span style="color:#ffcc00;">[SUCCESS] Unregistered Farmer Node Created (ID: UNREG-902).</span>
+                    </div>
+                    """, unsafe_allow_html=True)
+                else:
+                    st.markdown("""
+                    <div style="background-color: #0c0e15; color: #4af626; padding: 15px; font-family: 'Courier New', Courier, monospace; border-radius: 4px; font-size: 0.8rem; height: 350px; overflow-y: auto; border: 1px solid #1a1c23;">
+                        > [SYSTEM] Initializing Layout-Aware Vision-Language Model...<br>
+                        > [INGEST] Scanning Panchayat Certificate...<br>
+                        > [OCR] Rectifying folded and crumpled topology...<br>
+                        > [EXTRACT] <b>Document Type:</b> Oral Affidavit #202A<br>
+                        > [EXTRACT] <b>Landlord Target:</b> Unknown (Govt Trust Land)<br>
+                        > [EXTRACT] <b>Unregistered Entity:</b> Dipankar Saikia<br>
+                        > [EXTRACT] <b>Claimed Area:</b> 3 bighas<br>
+                        > [ALIGN] Querying Bhulekh database for geographic matching...<br>
+                        > <span style="color:#ffcc00;">[SUCCESS] Unregistered Farmer Node Created (ID: UNREG-903).</span>
+                    </div>
+                    """, unsafe_allow_html=True)
 
     st.markdown("<br>", unsafe_allow_html=True)
 
