@@ -249,11 +249,12 @@ def render_geotagging_page():
     st.markdown("<p style='color: #a0a0a0; font-size: 0.9rem;'>Now that the identity is resolved, the system dynamically queries the ArcGIS World Imagery API for the Khatauni target coordinate and runs our local vision model pipeline to physically extract the sub-lease parcel boundaries.</p>", unsafe_allow_html=True)
     
     with st.spinner("Initializing ArcGIS Imagery and Vision Extraction Engine..."):
-        # Target coordinate in Assam (agricultural area)
-        target_lat, target_lon = 26.2343, 91.5644
+        # Using a highly-structured agricultural region (Punjab) for distinct, sharp boundaries
+        lat = 30.2520
+        lon = 74.9450
         
-        # Run our vision extraction pipeline
-        raw_img = fetch_arcgis_satellite_imagery(target_lat, target_lon, zoom=17)
+        # Fetch and process the real tile at zoom 16 to get a high density of fields
+        raw_img = fetch_arcgis_satellite_imagery(lat, lon, zoom=16)
         binary_mask, skeleton_mask, overlay_img, field_count, valid_contours = extract_field_boundaries(raw_img)
         
         c1, c2, c3, c4 = st.columns(4)

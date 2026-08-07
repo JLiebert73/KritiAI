@@ -88,7 +88,7 @@ def extract_field_boundaries(image_rgb):
     
     for contour in contours:
         area = cv2.contourArea(contour)
-        if area > 100 and area < 60000: # Typical field size bounds for higher zoom levels
+        if area > 100 and area < 25000: # Typical field size bounds for Zoom 16
             valid_fields_count += 1
             
             # Smooth the polygon (simplify the geometry into a clean vector)
