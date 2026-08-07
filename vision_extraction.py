@@ -13,6 +13,20 @@ def lat_lon_to_tile_xy(lat, lon, zoom):
     y_tile = int((1.0 - math.asinh(math.tan(lat_rad)) / math.pi) / 2.0 * n)
     return x_tile, y_tile
 
+def pixel_to_lat_lon(px, py, center_lat, center_lon, zoom=16, tile_size=256):
+    """Converts a local pixel coordinate back to a global geographic coordinate"""
+    x_tile, y_tile = lat_lon_to_tile_xy(center_lat, center_lon, zoom)
+    
+    n = 2.0 ** zoom
+    fractional_x = x_tile + (px / tile_size)
+    fractional_y = y_tile + (py / tile_size)
+    
+    lon_deg = fractional_x / n * 360.0 - 180.0
+    lat_rad = math.atan(math.sinh(math.pi * (1 - 2 * fractional_y / n)))
+    lat_deg = math.degrees(lat_rad)
+    
+    return lat_deg, lon_deg
+
 def prune_skeleton(skel, num_iter=30):
     """Prunes dangling branches (spurs) from a skeletonized image to create a clean planar graph."""
     skel = skel.copy()
@@ -62,7 +76,7 @@ def fetch_arcgis_satellite_imagery(lat, lon, zoom=16):
         # Fallback to a solid dark image if no internet
         return np.zeros((256, 256, 3), dtype=np.uint8)
 
-def extract_field_boundaries(image_rgb):
+def extract_field_boundaries(image_rgb, center_lat, center_lon, zoom=16):
     """
     Simulates a heavy segmentation model (like SAM or DINO) by using a lightning-fast
     OpenCV morphological pipeline to extract agricultural field boundaries.
@@ -121,8 +135,15 @@ def extract_field_boundaries(image_rgb):
             
             lc_class, lc_color = classify_land_cover(mean_color)
             
+            geo_polygon = []
+            for point in approx:
+                px, py = point[0]
+                plat, plon = pixel_to_lat_lon(px, py, center_lat, center_lon, zoom)
+                geo_polygon.append([plon, plat]) # PyDeck expects [longitude, latitude]
+            
             valid_contours.append({
                 "geometry": approx,
+                "geo_polygon": geo_polygon,
                 "class": lc_class,
                 "color": lc_color
             })

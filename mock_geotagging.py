@@ -356,39 +356,30 @@ def render_geotagging_page():
     # SECTION 4: GROUND-TRUTH GEOTAGGING MAP
     # -------------------------------------------------------------------------
     st.markdown("#### 4. The Geotagged Spatial Registry")
-    st.markdown("<p style='color: #a0a0a0; font-size: 0.9rem;'>The PyDeck visualization below demonstrates the final organizational brain state. <b style='color:#63e6be;'>Green polygons</b> are standard registered farmers. The <b style='color:#ffcc00;'>Gold polygon</b> represents our newly geotagged unregistered tenant farmer, completely mapped and fully legally resolvable.</p>", unsafe_allow_html=True)
-    
-    gandhi_lat = 26.1795
-    gandhi_lon = 91.7615
-
-    # We use a mix of standard registered farms (green) and our newly discovered unregistered farm (gold)
-    map_data = [
-        # Standard Registered
-        {"coords": [[91.7588, 26.1805], [91.7602, 26.1815], [91.7628, 26.1818], [91.7645, 26.1808], [91.7648, 26.1792], [91.7635, 26.1778], [91.7610, 26.1775], [91.7592, 26.1788], [91.7588, 26.1805]], 
-         "is_unreg": False, "farmer": "S. Borah", "khasra": "KH-101", "resolution": "Direct Land Registry (RoR)"},
-         
-        # Newly Geotagged Unregistered Tenant Farmer (KH-115/P Sublease)
-        {"coords": [[91.7558, 26.1852], [91.7582, 26.1855], [91.7590, 26.1835], [91.7568, 26.1832], [91.7558, 26.1852]], 
-         "is_unreg": True, "farmer": "Bipul Das (UNREG-902)", "khasra": "KH-115/P (Sub-lease)", "resolution": "Document OCR + Knowledge Graph Inference"},
-         
-        # Standard Registered
-        {"coords": [[91.7535, 26.1848], [91.7558, 26.1852], [91.7568, 26.1832], [91.7545, 26.1828], [91.7535, 26.1848]], 
-         "is_unreg": False, "farmer": "M. Kalita", "khasra": "KH-114", "resolution": "Direct Land Registry (RoR)"},
-    ]
+    st.markdown("<p style='color: #a0a0a0; font-size: 0.9rem;'>The PyDeck visualization below demonstrates the real-time AI Land Cover classification superimposed directly onto the global spatial registry.</p>", unsafe_allow_html=True)
     
     viz_data = []
-    for f in map_data:
-        is_unreg = f["is_unreg"]
-        viz_data.append({
-            "polygon": f["coords"],
-            "farmer_name": f["farmer"],
-            "khasra_id": f["khasra"],
-            "resolution_method": f["resolution"],
-            "fill_color": [255, 204, 0, 165] if is_unreg else [32, 201, 151, 140],
-            "line_color": [255, 204, 0, 255] if is_unreg else [100, 255, 180, 255],
-            "badge": "UNREGISTERED TENANT (AI-GEOTAGGED)" if is_unreg else "FORMAL LAND OWNER",
-            "line_width": 5 if is_unreg else 2
-        })
+    if 'valid_contours' in locals() and valid_contours:
+        for i, item in enumerate(valid_contours):
+            geo_polygon = item['geo_polygon']
+            lc_class = item['class']
+            r, g, b = item['color']
+            
+            # Match it with the extracted_registry generated in Section 3
+            owner = extracted_registry[i]["Geotagged Owner"]
+            khasra = extracted_registry[i]["Registry ID"]
+            area = extracted_registry[i]["Estimated Area (sqm)"]
+            
+            viz_data.append({
+                "polygon": geo_polygon,
+                "class": lc_class,
+                "owner": owner,
+                "khasra": khasra,
+                "area": area,
+                "fill_color": [r, g, b, 140],
+                "line_color": [r, g, b, 255],
+                "line_width": 2
+            })
         
     layer = pdk.Layer(
         "PolygonLayer",
@@ -402,8 +393,8 @@ def render_geotagging_page():
     )
 
     view_state = pdk.ViewState(
-        latitude=gandhi_lat,
-        longitude=gandhi_lon,
+        latitude=lat if 'lat' in locals() else 30.2520,
+        longitude=lon if 'lon' in locals() else 74.9450,
         zoom=15,
         pitch=40
     )
@@ -412,13 +403,14 @@ def render_geotagging_page():
         pdk.Deck(
             layers=[layer],
             initial_view_state=view_state,
+            map_style="mapbox://styles/mapbox/dark-v10",
             tooltip={
                 "html": """
                 <div style="background: rgba(15, 17, 26, 0.95); padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); font-family: 'Inter', sans-serif;">
-                    <div style="font-size: 1.05rem; font-weight: 700; color: #ffffff; border-bottom: 1px solid rgba(255,255,255,0.15); padding-bottom: 6px; margin-bottom: 8px;">{khasra_id}</div>
-                    <div style="font-size: 0.9rem; color: #adb5bd; margin-bottom: 4px;">Cultivator: <b style="color: #ffffff;">{farmer_name}</b></div>
-                    <div style="font-size: 0.9rem; color: #adb5bd; margin-bottom: 6px;">Geotagging Method: <b style="color: #8daeff;">{resolution_method}</b></div>
-                    <div style="font-size: 0.85rem; font-weight: 700; color: #000000; background: #ffcc00; padding: 4px 8px; border-radius: 4px; display: inline-block;">{badge}</div>
+                    <div style="font-size: 1.05rem; font-weight: 700; color: #ffffff; border-bottom: 1px solid rgba(255,255,255,0.15); padding-bottom: 6px; margin-bottom: 8px;">{khasra}</div>
+                    <div style="font-size: 0.9rem; color: #adb5bd; margin-bottom: 4px;">Owner: <b style="color: #ffffff;">{owner}</b></div>
+                    <div style="font-size: 0.9rem; color: #adb5bd; margin-bottom: 6px;">Land Cover: <b style="color: #8daeff;">{class}</b></div>
+                    <div style="font-size: 0.85rem; font-weight: 700; color: #000000; background: #63e6be; padding: 4px 8px; border-radius: 4px; display: inline-block;">Area: {area} sqm</div>
                 </div>
                 """
             }
