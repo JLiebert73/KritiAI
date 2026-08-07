@@ -58,11 +58,11 @@ def extract_field_boundaries(image_rgb):
     blurred = cv2.GaussianBlur(gray, (5, 5), 0)
     
     # 3. Canny Edge Detection (extracting raw boundaries)
-    # Lower thresholds to pick up soft color transitions (subtle crop boundaries) in the middle regions
-    edges = cv2.Canny(blurred, 15, 45)
+    # Using specific thresholds adapted for agricultural satellite imagery
+    edges = cv2.Canny(blurred, 30, 100)
     
-    # 4. Morphological Closing to connect edges
-    kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5, 5))
+    # 4. Morphological Transformations to close the polygons
+    kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
     dilated = cv2.dilate(edges, kernel, iterations=2)
     closed = cv2.morphologyEx(dilated, cv2.MORPH_CLOSE, kernel, iterations=2)
     
