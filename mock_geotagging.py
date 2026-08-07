@@ -429,7 +429,6 @@ def render_geotagging_page():
         pdk.Deck(
             layers=[layer],
             initial_view_state=view_state,
-            map_style="mapbox://styles/mapbox/dark-v10",
             tooltip={
                 "html": """
                 <div style="background: rgba(15, 17, 26, 0.95); padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); font-family: 'Inter', sans-serif;">
