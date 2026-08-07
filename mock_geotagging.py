@@ -277,7 +277,6 @@ def render_geotagging_page():
             # Convert CV2 Contours to Interactive Plotly Polygons
             fig = go.Figure()
             fig.add_trace(go.Image(z=raw_img))
-            
             mock_owners = ["Bipul Das", "Dipankar Saikia", "Meera Gogoi", "Raju Das", "Anita Borah", "Sanjib Kalita", "Priya Hazarika", "Unknown Tenant", "State Trust"]
             
             # Store generated data to display in a table later
@@ -295,12 +294,16 @@ def render_geotagging_page():
                 x = np.append(x, x[0])
                 y = np.append(y, y[0])
                 
+                owner = random.choice(mock_owners)
+                khasra = f"KH-{random.randint(100, 999)}/P"
                 area_sqm = int(cv2.contourArea(contour) * 1.5) # Mock conversion
                 
                 extracted_registry.append({
+                    "Registry ID": khasra,
+                    "Geotagged Owner": owner,
                     "Land Cover Class": lc_class,
                     "Estimated Area (sqm)": area_sqm,
-                    "RGB Color": f"rgb({r}, {g}, {b})"
+                    "Status": "Matched" if owner not in ["Unknown Tenant", "State Trust"] else "Unregistered"
                 })
                 
                 fig.add_trace(go.Scatter(
@@ -310,7 +313,7 @@ def render_geotagging_page():
                     line=dict(color=f"rgb({r}, {g}, {b})", width=2),
                     hoveron="fills",
                     hoverinfo="text",
-                    text=f"<b>Class:</b> {lc_class}<br><b>Area:</b> {area_sqm} sqm",
+                    text=f"<b>Owner:</b> {owner}<br><b>ID:</b> {khasra}<br><b>Class:</b> {lc_class}<br><b>Area:</b> {area_sqm} sqm",
                     hoverlabel=dict(bgcolor=f"rgba({r}, {g}, {b}, 0.9)", font=dict(color="black")),
                     showlegend=False
                 ))
