@@ -261,7 +261,7 @@ def render_geotagging_page():
         with c1:
             st.markdown("<b style='font-size:0.85rem;color:#adb5bd;'>Raw ArcGIS Satellite</b>", unsafe_allow_html=True)
             st.image(raw_img, use_container_width=True)
-            st.caption(f"Input: [{target_lat}, {target_lon}]")
+            st.caption(f"Input: [{lat}, {lon}]")
         with c2:
             st.markdown("<b style='font-size:0.85rem;color:#adb5bd;'>Latent Edge Mask</b>", unsafe_allow_html=True)
             st.image(binary_mask, use_container_width=True)
