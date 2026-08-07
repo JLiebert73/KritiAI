@@ -26,7 +26,7 @@ def render_geotagging_page():
         if "doc_extracted" not in st.session_state:
             st.session_state.doc_extracted = False
     
-        doc_col, attn_col, terminal_col = st.columns([1, 1.2, 1.2])
+        doc_col, attn_col = st.columns(2)
     
         with doc_col:
             with st.container(border=True):
@@ -110,40 +110,37 @@ def render_geotagging_page():
                     )
                     st.plotly_chart(fig_vlm, use_container_width=True, config={'displayModeBar': False})
     
-        with terminal_col:
-            if st.session_state.doc_extracted:
-                with st.container(border=True):
-                    st.markdown("<b style='color:#8daeff;'>VLM Extraction Engine (KritiAI Terminal)</b>", unsafe_allow_html=True)
-                    
-                    if "Degraded" in doc_type:
-                        st.markdown("""
-                        <div style="background-color: #0c0e15; color: #4af626; padding: 15px; font-family: 'Courier New', Courier, monospace; border-radius: 4px; font-size: 0.8rem; height: 350px; overflow-y: auto; border: 1px solid #1a1c23;">
-                            > [SYSTEM] Initializing Layout-Aware Vision-Language Model...<br>
-                            > [INGEST] Scanning Handwritten Lease Agreement...<br>
-                            > [OCR] Detected Bilingual Script (English/Assamese). Low contrast detected.<br>
-                            > [DENOISE] Enhancing contrast and removing water stains...<br>
-                            > [EXTRACT] <b>Landlord Target:</b> R. Sharma (Resolved to KH-115/P)<br>
-                            > [EXTRACT] <b>Unregistered Entity:</b> Bipul Das (Role: Lessee)<br>
-                            > [EXTRACT] <b>Spatial Anchor:</b> "South of Gandhi Basti road"<br>
-                            > [EXTRACT] <b>Temporal Anchor:</b> "Kharif Paddy"<br>
-                            > [ALIGN] Vectorizing extracted semantic text for Knowledge Graph projection...<br>
-                            > <span style="color:#ffcc00;">[SUCCESS] Unregistered Farmer Node Created (ID: UNREG-902).</span>
-                        </div>
-                        """, unsafe_allow_html=True)
-                    else:
-                        st.markdown("""
-                        <div style="background-color: #0c0e15; color: #4af626; padding: 15px; font-family: 'Courier New', Courier, monospace; border-radius: 4px; font-size: 0.8rem; height: 350px; overflow-y: auto; border: 1px solid #1a1c23;">
-                            > [SYSTEM] Initializing Layout-Aware Vision-Language Model...<br>
-                            > [INGEST] Scanning Panchayat Certificate...<br>
-                            > [OCR] Rectifying folded and crumpled topology...<br>
-                            > [EXTRACT] <b>Document Type:</b> Oral Affidavit #202A<br>
-                            > [EXTRACT] <b>Landlord Target:</b> Unknown (Govt Trust Land)<br>
-                            > [EXTRACT] <b>Unregistered Entity:</b> Dipankar Saikia<br>
-                            > [EXTRACT] <b>Claimed Area:</b> 3 bighas<br>
-                            > [ALIGN] Querying Bhulekh database for geographic matching...<br>
-                            > <span style="color:#ffcc00;">[SUCCESS] Unregistered Farmer Node Created (ID: UNREG-903).</span>
-                        </div>
-                        """, unsafe_allow_html=True)
+        if st.session_state.doc_extracted:
+            with st.expander("💻 View Raw VLM Logs (KritiAI Terminal)", expanded=False):
+                if "Degraded" in doc_type:
+                    st.markdown("""
+                    <div style="background-color: #0c0e15; color: #4af626; padding: 15px; font-family: 'Courier New', Courier, monospace; border-radius: 4px; font-size: 0.8rem; overflow-y: auto; border: 1px solid #1a1c23;">
+                        > [SYSTEM] Initializing Layout-Aware Vision-Language Model...<br>
+                        > [INGEST] Scanning Handwritten Lease Agreement...<br>
+                        > [OCR] Detected Bilingual Script (English/Assamese). Low contrast detected.<br>
+                        > [DENOISE] Enhancing contrast and removing water stains...<br>
+                        > [EXTRACT] <b>Landlord Target:</b> R. Sharma (Resolved to KH-115/P)<br>
+                        > [EXTRACT] <b>Unregistered Entity:</b> Bipul Das (Role: Lessee)<br>
+                        > [EXTRACT] <b>Spatial Anchor:</b> "South of Gandhi Basti road"<br>
+                        > [EXTRACT] <b>Temporal Anchor:</b> "Kharif Paddy"<br>
+                        > [ALIGN] Vectorizing extracted semantic text for Knowledge Graph projection...<br>
+                        > <span style="color:#ffcc00;">[SUCCESS] Unregistered Farmer Node Created (ID: UNREG-902).</span>
+                    </div>
+                    """, unsafe_allow_html=True)
+                else:
+                    st.markdown("""
+                    <div style="background-color: #0c0e15; color: #4af626; padding: 15px; font-family: 'Courier New', Courier, monospace; border-radius: 4px; font-size: 0.8rem; overflow-y: auto; border: 1px solid #1a1c23;">
+                        > [SYSTEM] Initializing Layout-Aware Vision-Language Model...<br>
+                        > [INGEST] Scanning Panchayat Certificate...<br>
+                        > [OCR] Rectifying folded and crumpled topology...<br>
+                        > [EXTRACT] <b>Document Type:</b> Oral Affidavit #202A<br>
+                        > [EXTRACT] <b>Landlord Target:</b> Unknown (Govt Trust Land)<br>
+                        > [EXTRACT] <b>Unregistered Entity:</b> Dipankar Saikia<br>
+                        > [EXTRACT] <b>Claimed Area:</b> 3 bighas<br>
+                        > [ALIGN] Querying Bhulekh database for geographic matching...<br>
+                        > <span style="color:#ffcc00;">[SUCCESS] Unregistered Farmer Node Created (ID: UNREG-903).</span>
+                    </div>
+                    """, unsafe_allow_html=True)
 
         st.markdown("<br>", unsafe_allow_html=True)
 
