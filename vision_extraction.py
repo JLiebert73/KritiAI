@@ -13,13 +13,17 @@ def lat_lon_to_tile_xy(lat, lon, zoom):
     y_tile = int((1.0 - math.asinh(math.tan(lat_rad)) / math.pi) / 2.0 * n)
     return x_tile, y_tile
 
-def pixel_to_lat_lon(px, py, center_lat, center_lon, zoom=16, tile_size=256):
-    """Converts a local pixel coordinate back to a global geographic coordinate"""
-    x_tile, y_tile = lat_lon_to_tile_xy(center_lat, center_lon, zoom)
+def pixel_to_lat_lon(px, py, center_lat, center_lon, zoom=16, tile_size=256, grid_size=3):
+    """Converts a local pixel coordinate from a stitched tile grid back to a global geographic coordinate"""
+    x_center, y_center = lat_lon_to_tile_xy(center_lat, center_lon, zoom)
+    
+    offset = grid_size // 2
+    top_left_x_tile = x_center - offset
+    top_left_y_tile = y_center - offset
     
     n = 2.0 ** zoom
-    fractional_x = x_tile + (px / tile_size)
-    fractional_y = y_tile + (py / tile_size)
+    fractional_x = top_left_x_tile + (px / tile_size)
+    fractional_y = top_left_y_tile + (py / tile_size)
     
     lon_deg = fractional_x / n * 360.0 - 180.0
     lat_rad = math.atan(math.sinh(math.pi * (1 - 2 * fractional_y / n)))
@@ -58,23 +62,38 @@ def classify_land_cover(mean_color):
     else:
         return "Barren / Fallow Land", (205, 133, 63) # Brown
 
-def fetch_arcgis_satellite_imagery(lat, lon, zoom=16):
-    """Fetches a live high-res satellite tile from the ArcGIS REST API"""
-    x, y = lat_lon_to_tile_xy(lat, lon, zoom)
-    url = f"https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{zoom}/{y}/{x}"
+def fetch_arcgis_satellite_imagery(lat, lon, zoom=16, grid_size=3):
+    """Fetches a live high-res satellite tile grid from the ArcGIS REST API"""
+    x_center, y_center = lat_lon_to_tile_xy(lat, lon, zoom)
     
-    try:
-        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
-        with urllib.request.urlopen(req) as response:
-            image_bytes = np.asarray(bytearray(response.read()), dtype="uint8")
-            image = cv2.imdecode(image_bytes, cv2.IMREAD_COLOR)
-            # OpenCV loads as BGR, convert to RGB for Streamlit displaying
-            image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-            return image_rgb
-    except Exception as e:
-        print(f"Failed to fetch tile: {e}")
-        # Fallback to a solid dark image if no internet
-        return np.zeros((256, 256, 3), dtype=np.uint8)
+    offset = grid_size // 2
+    stitched_rows = []
+    
+    for dy in range(-offset, offset + 1):
+        y_tile = y_center + dy
+        row_images = []
+        for dx in range(-offset, offset + 1):
+            x_tile = x_center + dx
+            url = f"https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{zoom}/{y_tile}/{x_tile}"
+            
+            try:
+                req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+                with urllib.request.urlopen(req) as response:
+                    image_bytes = np.asarray(bytearray(response.read()), dtype="uint8")
+                    image = cv2.imdecode(image_bytes, cv2.IMREAD_COLOR)
+                    image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+                    row_images.append(image_rgb)
+            except Exception as e:
+                print(f"Failed to fetch tile {x_tile},{y_tile}: {e}")
+                # Fallback to a solid dark image if no internet
+                row_images.append(np.zeros((256, 256, 3), dtype=np.uint8))
+        
+        # Horizontally stack the tiles in this row
+        stitched_rows.append(np.hstack(row_images))
+    
+    # Vertically stack all the rows
+    final_image = np.vstack(stitched_rows)
+    return final_image
 
 def extract_field_boundaries(image_rgb, center_lat, center_lon, zoom=16):
     """

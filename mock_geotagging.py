@@ -356,10 +356,12 @@ def render_geotagging_page():
     # SECTION 4: GROUND-TRUTH GEOTAGGING MAP
     # -------------------------------------------------------------------------
     st.markdown("#### 4. The Geotagged Spatial Registry")
-    st.markdown("<p style='color: #a0a0a0; font-size: 0.9rem;'>The PyDeck visualization below demonstrates the real-time AI Land Cover classification superimposed directly onto the global spatial registry.</p>", unsafe_allow_html=True)
-    
     viz_data = []
+    
     if 'valid_contours' in locals() and valid_contours:
+        st.markdown("<p style='color: #a0a0a0; font-size: 0.9rem;'>The PyDeck visualization below demonstrates the real-time AI Land Cover classification superimposed directly onto the global spatial registry.</p>", unsafe_allow_html=True)
+        view_lat = lat
+        view_lon = lon
         for i, item in enumerate(valid_contours):
             geo_polygon = item['geo_polygon']
             lc_class = item['class']
@@ -380,6 +382,30 @@ def render_geotagging_page():
                 "line_color": [r, g, b, 255],
                 "line_width": 2
             })
+    else:
+        # FALLBACK: Render default mock data
+        st.markdown("<p style='color: #a0a0a0; font-size: 0.9rem;'>No live polygons extracted. Rendering default spatial registry fallback. <b style='color:#63e6be;'>Green polygons</b> are standard registered farmers. The <b style='color:#ffcc00;'>Gold polygon</b> represents a geotagged unregistered tenant farmer.</p>", unsafe_allow_html=True)
+        view_lat = 26.1795
+        view_lon = 91.7615
+        
+        map_data = [
+            {"coords": [[91.7588, 26.1805], [91.7602, 26.1815], [91.7628, 26.1818], [91.7645, 26.1808], [91.7648, 26.1792], [91.7635, 26.1778], [91.7610, 26.1775], [91.7592, 26.1788], [91.7588, 26.1805]], "is_unreg": False, "farmer": "S. Borah", "khasra": "KH-101"},
+            {"coords": [[91.7558, 26.1852], [91.7582, 26.1855], [91.7590, 26.1835], [91.7568, 26.1832], [91.7558, 26.1852]], "is_unreg": True, "farmer": "Bipul Das (UNREG-902)", "khasra": "KH-115/P (Sub-lease)"},
+            {"coords": [[91.7535, 26.1848], [91.7558, 26.1852], [91.7568, 26.1832], [91.7545, 26.1828], [91.7535, 26.1848]], "is_unreg": False, "farmer": "M. Kalita", "khasra": "KH-114"},
+        ]
+        
+        for f in map_data:
+            is_unreg = f["is_unreg"]
+            viz_data.append({
+                "polygon": f["coords"],
+                "class": "UNREGISTERED TENANT" if is_unreg else "FORMAL LAND OWNER",
+                "owner": f["farmer"],
+                "khasra": f["khasra"],
+                "area": "N/A",
+                "fill_color": [255, 204, 0, 165] if is_unreg else [32, 201, 151, 140],
+                "line_color": [255, 204, 0, 255] if is_unreg else [100, 255, 180, 255],
+                "line_width": 5 if is_unreg else 2
+            })
         
     layer = pdk.Layer(
         "PolygonLayer",
@@ -393,8 +419,8 @@ def render_geotagging_page():
     )
 
     view_state = pdk.ViewState(
-        latitude=lat if 'lat' in locals() else 30.2520,
-        longitude=lon if 'lon' in locals() else 74.9450,
+        latitude=view_lat,
+        longitude=view_lon,
         zoom=15,
         pitch=40
     )
