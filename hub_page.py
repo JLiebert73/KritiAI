@@ -41,13 +41,13 @@ def render_hub_page():
         
         fig = go.Figure()
         
-        # Background noise
+        # Background noise (sparser and colored)
         fig.add_trace(go.Scatter3d(
-            x=np.random.uniform(-4, 4, 1000),
-            y=np.random.uniform(-4, 4, 1000),
-            z=np.random.uniform(-4, 4, 1000),
+            x=np.random.uniform(-4, 4, 300),
+            y=np.random.uniform(-4, 4, 300),
+            z=np.random.uniform(-4, 4, 300),
             mode='markers',
-            marker=dict(size=2, color='rgba(255, 255, 255, 0.1)'),
+            marker=dict(size=2, color='rgba(90, 160, 255, 0.15)'),
             hoverinfo='none',
             showlegend=False
         ))
