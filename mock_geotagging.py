@@ -262,7 +262,7 @@ def render_geotagging_page():
         
         # Fetch and process the real tile at zoom 16 to get a high density of fields
         raw_img = fetch_arcgis_satellite_imagery(lat, lon, zoom=16)
-        binary_mask, skeleton_mask, overlay_img, field_count, valid_contours = extract_field_boundaries(raw_img)
+        binary_mask, skeleton_mask, overlay_img, field_count, valid_contours = extract_field_boundaries(raw_img, lat, lon)
         
         c1, c2, c3, c4 = st.columns(4)
         with c1:
