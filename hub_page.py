@@ -7,24 +7,26 @@ def render_hub_page():
     st.markdown("<h1 style='text-align: center; font-family: Playfair Display; color: #ffffff; margin-bottom: 0px;'>KritiAI Core Brain</h1>", unsafe_allow_html=True)
     st.markdown("<p style='text-align: center; color: #a0a0a0; font-size: 1.1rem; margin-top: 5px; margin-bottom: 40px;'>The Multi-Modal Intelligence Hub</p>", unsafe_allow_html=True)
     
-    # 3-Column Layout for the Hub and Spoke
-    left_col, center_col, right_col = st.columns([1, 1.5, 1])
-    
-    # Left Spokes
-    with left_col:
-        st.markdown("<br><br>", unsafe_allow_html=True)
+    # 3x3 Grid Layout to encircle the brain
+    # Top Row
+    top_l, top_c, top_r = st.columns([1, 1.5, 1])
+    with top_c:
+        st.markdown("<div style='text-align:center;'>", unsafe_allow_html=True)
         if st.button("📄 Document Intelligence\n(OCR & VLM)", use_container_width=True, key="hub_doc"):
             st.query_params["page"] = "doc_intel"
             st.rerun()
-            
-        st.markdown("<br>", unsafe_allow_html=True)
+        st.markdown("</div>", unsafe_allow_html=True)
+
+    # Middle Row
+    mid_l, mid_c, mid_r = st.columns([1, 1.5, 1])
+    
+    with mid_l:
+        st.markdown("<br><br><br><br>", unsafe_allow_html=True)
         if st.button("🧬 Identity Graph\n(Link Attack)", use_container_width=True, key="hub_id"):
             st.query_params["page"] = "id_graph"
             st.rerun()
-
             
-    # Center Hub (Vector Space UMAP)
-    with center_col:
+    with mid_c:
         np.random.seed(42)
         n_points = 500
         
@@ -37,6 +39,20 @@ def render_hub_page():
         
         fig = go.Figure()
         
+        # Orbital Rings (Enclosing the Brain in a Circle)
+        theta = np.linspace(0, 2*np.pi, 100)
+        radius = 3.5
+        x_ring = radius * np.cos(theta)
+        y_ring = radius * np.sin(theta)
+        z_zeros = np.zeros(100)
+        
+        # XY Plane Ring
+        fig.add_trace(go.Scatter3d(x=x_ring, y=y_ring, z=z_zeros, mode='lines', line=dict(color='rgba(90, 160, 255, 0.4)', width=2), hoverinfo='none', showlegend=False))
+        # XZ Plane Ring
+        fig.add_trace(go.Scatter3d(x=x_ring, y=z_zeros, z=y_ring, mode='lines', line=dict(color='rgba(90, 160, 255, 0.2)', width=2), hoverinfo='none', showlegend=False))
+        # YZ Plane Ring
+        fig.add_trace(go.Scatter3d(x=z_zeros, y=x_ring, z=y_ring, mode='lines', line=dict(color='rgba(90, 160, 255, 0.2)', width=2), hoverinfo='none', showlegend=False))
+
         # Background noise (sparser and colored)
         fig.add_trace(go.Scatter3d(
             x=np.random.uniform(-4, 4, 300),
@@ -83,26 +99,27 @@ def render_hub_page():
                     eye=dict(x=1.5, y=1.5, z=0.5)
                 )
             ),
-            height=450,
+            height=400,
             showlegend=False
         )
         
-        # Using a container to center it
         st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False})
-
-    # Right Spokes
-    with right_col:
-        st.markdown("<br><br>", unsafe_allow_html=True)
+        
+    with mid_r:
+        st.markdown("<br><br><br><br>", unsafe_allow_html=True)
         if st.button("🛰️ Spatial Geotagging\n(CV Pipeline)", use_container_width=True, key="hub_land"):
             st.query_params["page"] = "land_cover"
             st.rerun()
-            
-        st.markdown("<br>", unsafe_allow_html=True)
+
+    # Bottom Row
+    bot_l, bot_c, bot_r = st.columns([1, 1.5, 1])
+    
+    with bot_l:
         if st.button("🌊 PMFBY Flood Audit\n(Inundation)", use_container_width=True, key="hub_pmfby"):
             st.query_params["page"] = "pmfby"
             st.rerun()
             
-        st.markdown("<br>", unsafe_allow_html=True)
+    with bot_r:
         if st.button("🌾 Urvarak Sparsity\n(Fertilizer Planning)", use_container_width=True, key="hub_urvarak"):
             st.query_params["page"] = "urvarak"
             st.rerun()
